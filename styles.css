@@ -243,6 +243,8 @@ body {
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .cta-button.primary {
