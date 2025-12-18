@@ -189,6 +189,14 @@ body {
     font-size: 64px;
     font-weight: 800;
     line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.hero-subtitle {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 24px;
     color: var(--text-primary);
 }
@@ -627,6 +635,10 @@ body {
         font-size: 42px;
     }
     
+    .hero-subtitle {
+        font-size: 28px;
+    }
+    
     .hero-description {
         font-size: 18px;
     }
@@ -690,6 +702,10 @@ body {
     
     .hero-title {
         font-size: 32px;
+    }
+    
+    .hero-subtitle {
+        font-size: 24px;
     }
     
     .cta-button {
