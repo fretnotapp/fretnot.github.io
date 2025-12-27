@@ -41,6 +41,12 @@ body {
     padding: 0 24px;
 }
 
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
 /* Animation Classes */
 .fade-in {
     opacity: 0;
@@ -346,13 +352,74 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* How It Works Section */
-.how-it-works {
-    padding: 60px 0;
-    background: var(--bg-primary);
+/* Features Showcase - Alternating Layout */
+.features-showcase {
+    padding: 120px 0;
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+}
+
+.feature-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 120px;
+    min-height: 500px;
+}
+
+.feature-block:last-child {
+    margin-bottom: 0;
+}
+
+.feature-block-reverse {
+    grid-template-columns: 1fr 1fr;
+}
+
+.feature-block-reverse .feature-image-side {
+    grid-column: 2;
+}
+
+.feature-block-reverse .feature-text-side {
+    grid-column: 1;
+}
+
+.feature-image-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    z-index: 2;
-    margin-top: 0;
+}
+
+.feature-phone-image {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-block:hover .feature-phone-image {
+    transform: translateY(-12px) scale(1.02);
+}
+
+.feature-text-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.feature-text-side h3 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.feature-text-side p {
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--text-secondary);
 }
 
 .section-title {
@@ -433,11 +500,6 @@ body {
     margin: 0;
 }
 
-/* Screenshots Section */
-.screenshots {
-    padding: 120px 0;
-    background: var(--bg-secondary);
-}
 
 .screenshots-grid {
     display: grid;
@@ -648,25 +710,49 @@ body {
         margin-bottom: 60px;
     }
     
-    .features-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+    .features-showcase {
+        padding: 80px 0;
     }
     
-    .feature-card.horizontal {
-        flex-direction: column;
+    .feature-block {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        margin-bottom: 80px;
+        min-height: auto;
+    }
+    
+    .feature-block-reverse .feature-image-side {
+        grid-column: 1;
+        order: 2;
+    }
+    
+    .feature-block-reverse .feature-text-side {
+        grid-column: 1;
+        order: 1;
         text-align: center;
-        gap: 24px;
     }
     
-    .feature-icon-wrapper {
-        width: 70px;
-        height: 70px;
+    .feature-image-side {
+        grid-column: 1;
+        order: 2;
     }
     
-    .screenshots-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
+    .feature-text-side {
+        grid-column: 1;
+        order: 1;
+        text-align: center;
+    }
+    
+    .feature-text-side h3 {
+        font-size: 32px;
+    }
+    
+    .feature-text-side p {
+        font-size: 18px;
+    }
+    
+    .feature-phone-image {
+        max-width: 280px;
     }
     
     .footer-content {
@@ -683,8 +769,7 @@ body {
         font-size: 36px;
     }
     
-    .how-it-works,
-    .screenshots,
+    .features-showcase,
     .cta {
         padding: 80px 0;
     }
@@ -717,9 +802,46 @@ body {
         font-size: 28px;
     }
     
-    .how-it-works,
-    .screenshots,
-    .cta {
-        padding: 60px 0;
+    .features-showcase {
+        padding: 80px 0;
+    }
+    
+    .feature-block {
+        margin-bottom: 60px;
+        gap: 40px;
+    }
+    
+    .feature-block-reverse .feature-image-side {
+        grid-column: 1;
+        order: 2;
+    }
+    
+    .feature-block-reverse .feature-text-side {
+        grid-column: 1;
+        order: 1;
+        text-align: center;
+    }
+    
+    .feature-image-side {
+        grid-column: 1;
+        order: 2;
+    }
+    
+    .feature-text-side {
+        grid-column: 1;
+        order: 1;
+        text-align: center;
+    }
+    
+    .feature-text-side h3 {
+        font-size: 28px;
+    }
+    
+    .feature-text-side p {
+        font-size: 16px;
+    }
+    
+    .feature-phone-image {
+        max-width: 240px;
     }
 }
