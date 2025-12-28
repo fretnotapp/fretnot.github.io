@@ -654,6 +654,12 @@ body {
     gap: 40px;
 }
 
+@media (min-width: 768px) {
+    .footer-links {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 .footer-column h4 {
     font-size: 16px;
     font-weight: 700;
@@ -671,6 +677,27 @@ body {
 .footer-column a:hover {
     color: white;
     transform: translateX(4px);
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.15);
+}
+
+.social-link svg {
+    width: 24px;
+    height: 24px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s ease;
+}
+
+.social-link:hover svg {
+    color: white;
 }
 
 .footer-bottom {
@@ -796,6 +823,13 @@ body {
     .cta-button {
         width: 100%;
         justify-content: center;
+        white-space: nowrap;
+        font-size: 16px;
+    }
+    
+    .cta-button.large {
+        font-size: 16px;
+        padding: 16px 24px;
     }
     
     .section-title {
