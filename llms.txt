@@ -1,0 +1,42 @@
+# Fret Not
+
+> Fret Not is a free iOS guitar songbook app for beginners. It tracks every song you've learned — chords, capo positions, strumming patterns, and tuning — so you never forget how to play them.
+
+Fret Not was built by Alexa Kaminsky, a product designer learning to play guitar. The first version was built in one week using Claude Code, and the app launched in December 2025. It is available on iPhone and iPad (iOS 17 or later), is completely free, and contains no ads or in-app purchases.
+
+## Key facts
+
+- **Name:** Fret Not
+- **Type:** iOS guitar songbook app
+- **Audience:** Beginner guitarists
+- **Platform:** iPhone and iPad (iOS 17 or later)
+- **Price:** Free, no ads, no in-app purchases
+- **Launched:** December 2025
+- **Current version:** 1.4.2
+- **Built by:** Alexa Kaminsky (solo indie developer)
+- **Built with:** Claude Code
+- **Privacy:** Personal song library stays on-device by default; iCloud sync is optional
+
+## Features
+
+- Build and organize a personal guitar songbook
+- Track chords, tuning settings, strumming patterns, and capo positions per song
+- Identify chords instantly using a virtual fretboard
+- View all learned chords in one library
+- Built-in high-precision guitar tuner
+- Import songs from Spotify
+- Import tabs (chords, capo, lyrics) from Ultimate Guitar
+- Filter and search the song library
+
+## Pages
+
+- [Landing page](https://fretnot.app/): App overview, features, FAQ, download link
+- [Creation Story](https://fretnot.app/creation-story.html): How and why Fret Not was built
+- [Privacy Policy](https://fretnot.app/privacy.html): Data handling, iCloud sync, microphone permissions
+
+## Links
+
+- [App Store](https://apps.apple.com/app/id6756530936)
+- [Instagram](https://www.instagram.com/fretnotapp/)
+- [Maker's website](http://alexakaminsky.com)
+- [Support email](mailto:fretnotapp@gmail.com)

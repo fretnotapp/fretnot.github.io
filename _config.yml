@@ -1,0 +1,13 @@
+title: Fret Not
+url: https://fretnot.app
+
+include:
+  - _includes
+
+exclude:
+  - HERO_COPY_OPTIONS.md
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - archive

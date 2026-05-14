@@ -37,21 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScroll = currentScroll;
     });
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Smooth scroll for in-page anchor links (handles both "#features" and "/index.html#features")
+    const normalizePath = p => (p === '/' || p === '') ? '/index.html' : p;
+    document.querySelectorAll('a[href*="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href !== '#' && href !== '') {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            }
+            const url = new URL(this.href, location.href);
+            if (normalizePath(url.pathname) !== normalizePath(location.pathname)) return;
+            if (!url.hash || url.hash === '#') return;
+            const target = document.querySelector(url.hash);
+            if (!target) return;
+            e.preventDefault();
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            });
         });
     });
 
