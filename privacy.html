@@ -96,14 +96,17 @@
 
     <div class="privacy-content">
         <h1>Privacy Policy</h1>
-        <p class="last-updated"><strong>Last Updated:</strong> August 9, 2026</p>
+        <p class="last-updated"><strong>Last Updated:</strong> August 10, 2026</p>
 
         <p>At Fret Not, your privacy is our priority. This Privacy Policy explains how the Fret Not mobile application ("App") collects, uses, and protects your information.</p>
 
         <h2>Information We Collect</h2>
 
+        <h3>No Accounts, No Personal Identity</h3>
+        <p>Fret Not has no accounts and no login, and your use of the App is anonymous. We do <strong>not</strong> collect your name, email address, phone number, precise location, contacts, or photos, and we never ask you to sign up or sign in. The information the App does handle falls into the categories described below.</p>
+
         <h3>Data Stored on Your Device (Private)</h3>
-        <p>The following information stays entirely on your device and is never transmitted to our servers:</p>
+        <p>The following information is stored locally on your device. Aside from the anonymous song sharing described below, it is not transmitted to our servers:</p>
         <ul>
             <li><strong>Your Personal Song Library:</strong> All songs you add, including titles, artists, chords, lyrics, notes, and strumming patterns</li>
             <li><strong>Custom Chords:</strong> Any custom chord fingerings you create</li>
@@ -112,15 +115,26 @@
             <li><strong>App Settings:</strong> Your preferences and configuration choices</li>
         </ul>
 
-        <p style="background-color: #f0f7ff; border-left: 4px solid #0066cc; padding: 1rem; margin: 1.5rem 0;"><strong>Your Privacy is Our Priority:</strong> Your personal song library and practice notes are private and never leave your device. We never see what songs you're learning or practicing.</p>
+        <p style="background-color: #f0f7ff; border-left: 4px solid #0066cc; padding: 1rem; margin: 1.5rem 0;"><strong>Your Privacy is Our Priority:</strong> There are no accounts and no login — your identity stays anonymous. Your notes, lyrics, custom chord fingerings, and any songs you enter manually stay on your device and are never sent to us. For songs you link to Spotify, some anonymous song information is shared by default to improve chord suggestions for everyone; you can turn this off at any time in Settings (see below).</p>
 
-        <h3>Anonymous Community Contributions (Optional)</h3>
-        <p>To help other guitarists, you may choose to anonymously share song data with the community:</p>
+        <h3>Anonymous Identifier (Support ID)</h3>
+        <p>When you first open the App, it generates a random anonymous identifier (a UUID) and stores it on your device. This identifier:</p>
         <ul>
-            <li><strong>What We Collect:</strong> Chord progressions, capo positions, and tuning information for songs</li>
-            <li><strong>How It's Used:</strong> This data helps other users by suggesting popular chord arrangements for songs</li>
-            <li><strong>Anonymous:</strong> No personal information is included - we only collect the musical data</li>
-            <li><strong>Opt-Out:</strong> You can disable anonymous contributions at any time in Settings under "Share my songs anonymously"</li>
+            <li>Contains no personal information and is not linked to your real-world identity.</li>
+            <li>Is <strong>not</strong> used for third-party advertising or for tracking you across other apps or websites.</li>
+            <li>Is attached to anonymous analytics and subscription records so we can measure how the App is used on a per-install basis and help you if you contact support.</li>
+            <li>Is shown in the App under Settings as your <strong>"Support ID,"</strong> which you can share with us when you reach out for help.</li>
+        </ul>
+        <p>Because it is an identifier, we disclose it here for transparency — even though it never identifies you personally.</p>
+
+        <h3>Anonymous Song Data &amp; Chord Improvement (On by Default, Optional)</h3>
+        <p>To build and improve the chord suggestions that help everyone who uses Fret Not, the App anonymously shares information about songs you save that are linked to Spotify. This sharing is <strong>on by default</strong>, and you can turn it off at any time.</p>
+        <ul>
+            <li><strong>Only Spotify-linked songs:</strong> When you save a song that is linked to a Spotify track, the App submits the Spotify track ID, song title, artist, the chords, the capo position, and the tuning. Songs you enter manually (not linked to Spotify) are never submitted.</li>
+            <li><strong>How our suggestions perform:</strong> We also record information about the chord suggestions themselves — the chords our system suggested, the chords you ultimately kept, whether you edited the suggestion, the difficulty level, and a confidence value. This helps us measure and improve the accuracy of chord suggestions over time.</li>
+            <li><strong>Anonymous:</strong> This information is associated only with the anonymous identifier (Support ID) described above — never your name or personal identity. The Spotify track ID may also be attached to related analytics events.</li>
+            <li><strong>Where it goes:</strong> This data is stored in our own secure database (Supabase) and is never sold or shared outside the Fret Not app ecosystem.</li>
+            <li><strong>Opt-out:</strong> You can disable this at any time in Settings under <strong>"Share Songs Anonymously."</strong></li>
         </ul>
 
         <h3>Anonymous Usage Analytics</h3>
@@ -132,11 +146,11 @@
             <li>Whether users add strumming patterns or notes</li>
             <li>Whether Premium is active (an anonymous Premium vs. free flag only)</li>
         </ul>
-        <p>This analytics data is collected using Firebase Analytics (Google Analytics for Firebase), Amplitude (a third-party product analytics service), and our own secure database (Supabase). These services associate events with a random, per-install identifier so we can measure aggregate usage; this identifier is not tied to your name, account, or any personal identity, and we do not use it to track you across other apps or websites, or for advertising.</p>
-        <p><strong>Important:</strong> This data contains no personal information, song titles, or contact details, and is never linked to your real-world identity. It only tracks feature usage patterns to help us improve the app.</p>
+        <p>This analytics data is collected using Firebase Analytics (Google Analytics for Firebase), Amplitude (Amplitude, Inc.), and our own secure database (Supabase). These services associate events with the anonymous per-install identifier (Support ID) described above so we can measure aggregate usage; this identifier is not tied to your name, account, or any personal identity, and we do not use it to track you across other apps or websites, or for advertising.</p>
+        <p><strong>Important:</strong> This data contains no personal information, notes, lyrics, or contact details, and is never linked to your real-world identity. It tracks feature-usage patterns to help us improve the App. For songs you link to Spotify, an anonymous Spotify track identifier may be attached to certain events (see "Anonymous Song Data &amp; Chord Improvement" above).</p>
 
-        <h3>Session Replay (Amplitude)</h3>
-        <p>To better understand how people navigate the App and to improve its design, the App records anonymous session replays through Amplitude. A session replay is a reconstruction of in-app activity — the layout of screens, your taps, and how you move between screens — not a camera, microphone, or audio recording.</p>
+        <h3>Session Replay / Screen Recording (Amplitude)</h3>
+        <p>To better understand how people navigate the App and to improve its design, the App records anonymous <strong>session replays (screen recordings of in-app activity)</strong> through Amplitude (Amplitude, Inc.). A session replay is a reconstruction of on-screen activity — the layout of screens, your taps, and how you move between screens — not a camera, microphone, or audio recording.</p>
         <ul>
             <li><strong>On-screen text is masked:</strong> We apply conservative masking, so readable content such as song titles, notes, lyrics, and anything you type is not visible in recordings. Replays capture the app's layout, taps, and navigation — not readable content.</li>
             <li><strong>Payment screens are excluded:</strong> Purchase and payment screens are handled by Apple's system interface and are never captured in session replays.</li>
@@ -190,10 +204,10 @@
         <h3>Subscriptions &amp; Payments</h3>
         <p>The App offers "Fret Not Premium," an auto-renewable subscription available in monthly and annual options, sold through Apple's App Store:</p>
         <ul>
-            <li>All payments and billing are handled entirely by Apple. We never receive, collect, or store your payment card or billing information.</li>
-            <li>No account or login is required. Your subscription entitlement is verified on your device through Apple's StoreKit; we store only whether Premium is active locally on your device.</li>
+            <li>All payments and billing are handled entirely by Apple (App Store / StoreKit). We never see, receive, or store your payment-card or billing details.</li>
+            <li>No account or login is required. Your subscription entitlement is verified on your device through Apple's StoreKit.</li>
+            <li>For subscribers, we store subscription information in our own secure database (Supabase), keyed to the anonymous identifier (Support ID) described above: your subscription status (free or premium), the plan, the product identifier, the expiration date, the environment, and Apple's original transaction identifier. We use this to count how many people subscribe and to help you if you contact support. Apple's App Store Connect remains the source of truth for billing.</li>
             <li>Subscriptions automatically renew unless cancelled, and can be managed or cancelled at any time through your Apple ID / App Store account settings.</li>
-            <li>We record an anonymous, non-identifying flag (Premium vs. free) in our analytics so we can understand feature usage. No purchase details or identity are attached.</li>
         </ul>
 
         <h2>Data Sharing</h2>
@@ -202,12 +216,14 @@
 
         <p>Data transmission occurs only in the following cases:</p>
         <ul>
+            <li><strong>To Apple (App Store / StoreKit):</strong> Subscription purchases and payment processing are handled by Apple. We never receive your payment-card details</li>
             <li><strong>To iCloud:</strong> If you enable iCloud Sync, your data syncs to your personal iCloud account (managed by Apple)</li>
-            <li><strong>To Spotify API:</strong> When searching for songs or importing playlists, song metadata is retrieved from Spotify's public catalog through our secure backend</li>
-            <li><strong>To the AI Chord Lookup service:</strong> When you look up chords, the song's title, artist, and detected key are sent through our secure backend to Anthropic's Claude API to identify the chords. No personal information or identity is included</li>
-            <li><strong>Anonymous Community Data:</strong> If you choose to enable anonymous sharing, chord data is sent to our secure database (Supabase) to help other users. This data is anonymous and never sold or shared outside the Fret Not app ecosystem</li>
-            <li><strong>Anonymous Analytics:</strong> Usage patterns are sent to Firebase (Google Analytics for Firebase), Amplitude, and our secure database to help us improve the app. No personal information or song titles are included</li>
-            <li><strong>Anonymous Session Replays:</strong> Masked recordings of in-app layout, taps, and navigation are sent to Amplitude to help us improve the app's design. On-screen text is masked, payment screens are excluded, and no personal information or identity is included</li>
+            <li><strong>To Spotify:</strong> When you search for and link songs, your song search queries and track lookups are sent to Spotify's API (through our secure backend) to retrieve public catalog metadata (song titles, artists, album art)</li>
+            <li><strong>To Anthropic (Claude API):</strong> When you look up chords, the song's title, artist, and detected key are sent through our secure backend to Anthropic's Claude API to identify the chords. No personal information or identity is included</li>
+            <li><strong>Anonymous Song Data (Supabase):</strong> Unless you opt out, when you save a Spotify-linked song the Spotify track ID, title, artist, chords, capo, and tuning — plus how our chord suggestions performed — are sent to our secure database (Supabase), keyed to your anonymous identifier, to improve chord suggestions. Manually-entered songs are never submitted. This data is never sold or shared outside the Fret Not app ecosystem</li>
+            <li><strong>Subscription Records (Supabase):</strong> For subscribers, subscription status, plan, product identifier, expiration, environment, and Apple's original transaction identifier are stored in Supabase, keyed to your anonymous identifier</li>
+            <li><strong>Anonymous Analytics:</strong> Usage patterns are sent to Firebase (Google Analytics for Firebase), Amplitude (Amplitude, Inc.), and our secure database to help us improve the app. No personal information, notes, or lyrics are included; for Spotify-linked songs an anonymous Spotify track identifier may be attached</li>
+            <li><strong>Anonymous Session Replays:</strong> Masked screen recordings of in-app layout, taps, and navigation are sent to Amplitude to help us improve the app's design. On-screen text is masked, payment screens are excluded, and no personal information or identity is included</li>
         </ul>
 
         <h2>Data Storage and Security</h2>
@@ -215,7 +231,7 @@
         <p>Your data is stored in two locations:</p>
         <ul>
             <li><strong>On Your Device:</strong> Your personal song library, custom chords, and settings are stored locally on your iPhone/iPad using iOS's secure storage mechanisms</li>
-            <li><strong>Our Secure Servers (Supabase):</strong> Anonymous community contributions and usage analytics are stored in Supabase, a secure cloud database with industry-standard encryption and security measures</li>
+            <li><strong>Our Secure Database (Supabase):</strong> Anonymous usage events, anonymous Spotify-linked song data and chord-suggestion performance data, and subscription records are stored in Supabase — a secure cloud database with industry-standard encryption — keyed to your anonymous identifier and containing no personal identity</li>
             <li><strong>Our Backend (Netlify):</strong> Chord lookup results (song title, artist, key, and the returned chords) may be cached on our backend so repeated lookups don't need to be re-sent. This cache contains no personal or identifying information</li>
         </ul>
 
@@ -231,20 +247,26 @@
 
         <p>Fret Not is suitable for users of all ages. We do not knowingly collect personal information from children. The App does not require user accounts or personal information to function.</p>
 
-        <h2>Your Rights (GDPR Compliance)</h2>
+        <h2>Your Rights &amp; Controls (GDPR &amp; CCPA)</h2>
 
         <p>You have full control over your data:</p>
         <ul>
-            <li><strong>Access:</strong> All your personal data is accessible within the App. You can request a copy of any anonymous data we've collected from your contributions</li>
-            <li><strong>Delete:</strong> You can delete individual songs, lists, or all data by deleting the App. You can request deletion of your anonymous contributions from our database</li>
+            <li><strong>Access:</strong> All your personal data is accessible within the App. You can request a copy of any anonymous data associated with your Support ID</li>
+            <li><strong>Delete:</strong> You can delete individual songs, lists, or all local data by deleting the App. You can request deletion of the anonymous records associated with your Support ID from our database</li>
             <li><strong>Rectify:</strong> You can request correction of any inaccurate data</li>
             <li><strong>Export:</strong> Your data is stored in standard formats on your device and iCloud (if enabled)</li>
-            <li><strong>Opt-Out:</strong> You can disable anonymous data sharing, iCloud Sync, or microphone access at any time through App Settings or device Settings</li>
+            <li><strong>Share Songs Anonymously:</strong> Anonymous sharing of Spotify-linked song data is on by default; you can turn it off any time in Settings under "Share Songs Anonymously"</li>
+            <li><strong>Manage your subscription:</strong> You can manage or cancel your subscription at any time through your Apple ID / App Store settings</li>
+            <li><strong>Other controls:</strong> You can disable iCloud Sync or microphone access at any time through your device Settings</li>
         </ul>
 
-        <p>To exercise your data rights (access, delete, or rectify anonymous contributions), please contact us at the email address below.</p>
+        <p><strong>California residents (CCPA/CPRA):</strong> We do not sell or share your personal information, and we do not use your data for cross-context behavioral advertising. Because the App has no accounts and collects no personally identifying information, there is no personal profile for us to access or delete; you nonetheless retain the rights described above and may contact us with any request.</p>
+
+        <p>To exercise your data rights, please contact us at the email address below and include your Support ID where relevant.</p>
 
         <h2>Third-Party Services</h2>
+
+        <p>Fret Not relies on the following third-party processors. Each handles only the limited data described above and is bound by its own privacy policy: Anthropic, Google (Firebase), Amplitude, Inc., Supabase, Spotify, and Apple.</p>
 
         <h3>Spotify</h3>
         <p>When using Spotify features, you interact with Spotify's services subject to their <a href="https://www.spotify.com/legal/privacy-policy/" target="_blank">Privacy Policy</a>.</p>
@@ -262,7 +284,10 @@
         <p>Anonymous, aggregated usage analytics are collected using Firebase Analytics (Google Analytics for Firebase), subject to Google's <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a>.</p>
 
         <h3>Amplitude</h3>
-        <p>Anonymous, aggregated product analytics and masked session replays are processed by Amplitude, Inc., subject to Amplitude's <a href="https://amplitude.com/privacy" target="_blank">Privacy Policy</a>.</p>
+        <p>Anonymous, aggregated product analytics and masked session replays (screen recordings) are processed by Amplitude, Inc., subject to Amplitude's <a href="https://amplitude.com/privacy" target="_blank">Privacy Policy</a>.</p>
+
+        <h3>Supabase</h3>
+        <p>Anonymous usage events, anonymous Spotify-linked song and chord-suggestion data, and subscription records are stored in our database hosted by Supabase, Inc., subject to Supabase's <a href="https://supabase.com/privacy" target="_blank">Privacy Policy</a>.</p>
 
         <h2>Changes to This Policy</h2>
 
@@ -270,7 +295,7 @@
 
         <h2>Data Retention</h2>
 
-        <p>Your personal data is retained locally on your device and in your iCloud account (if sync is enabled) until you delete it. We do not store your personal data on our servers. Anonymous community contributions, usage analytics, and cached chord lookup results may be retained on our secure servers; these contain no personal or identifying information.</p>
+        <p>Your personal data is retained locally on your device and in your iCloud account (if sync is enabled) until you delete it. We do not store your personal data on our servers. Anonymous usage events, anonymous Spotify-linked song and chord-suggestion data, subscription records, and cached chord-lookup results may be retained in our secure database (Supabase), keyed to your anonymous identifier; these contain no personal or identifying information. You can request deletion of the data associated with your Support ID by contacting us.</p>
 
         <h2>International Users</h2>
 
@@ -280,10 +305,10 @@
 
         <p>As required by Apple's App Store, we disclose:</p>
         <ul>
-            <li><strong>Data Not Collected:</strong> We do not collect your name, contact info, your personal song library, or payment information (payments are handled entirely by Apple)</li>
-            <li><strong>Data Used to Track You:</strong> None - we do not track users across apps or websites</li>
+            <li><strong>Data Not Collected:</strong> We do not collect your name, email, phone number, precise location, contacts, photos, or payment-card details (payments are handled entirely by Apple)</li>
+            <li><strong>Data Used to Track You:</strong> None - we do not track users across apps or websites, and we do not use your data for third-party advertising</li>
             <li><strong>Data Linked to You:</strong> None - we do not require accounts, and no data is linked to your identity</li>
-            <li><strong>Data Not Linked to You:</strong> Anonymous usage analytics and masked session replays (including a random per-install analytics identifier and whether Premium is active) and optional community contributions (chord data only)</li>
+            <li><strong>Data Not Linked to You:</strong> an anonymous per-install identifier (your Support ID); usage analytics and masked session replays; purchase/subscription information (subscription status, plan, product identifier, expiration, and Apple's original transaction identifier); and, unless you opt out, anonymous song data for Spotify-linked songs (Spotify track ID, title, artist, chords, capo, tuning) and chord-suggestion performance data</li>
         </ul>
 
         <h2>Contact Us</h2>
@@ -293,6 +318,7 @@
             <li><strong>Website:</strong> <a href="http://fretnot.app">fretnot.app</a></li>
             <li><strong>Email:</strong> <a href="mailto:fretnotapp@gmail.com">fretnotapp@gmail.com</a></li>
         </ul>
+        <p>When contacting us for support or to make a data request, you can include your <strong>Support ID</strong> (found in the App under Settings) so we can locate the anonymous records associated with your install.</p>
 
         <hr style="margin: 3rem 0; border: none; border-top: 1px solid #e0e0e0;">
 
@@ -300,19 +326,22 @@
 
         <p><strong>In short:</strong></p>
         <ul>
-            <li>✅ Your personal song library stays on your device (and your personal iCloud if you choose)</li>
+            <li>✅ No accounts and no login - we never collect your name, email, phone, location, contacts, or photos</li>
+            <li>✅ Your notes, lyrics, and manually-entered songs stay on your device</li>
             <li>✅ Microphone is only used for the tuner and audio never leaves your device</li>
-            <li>✅ Anonymous community sharing is optional and can be disabled</li>
-            <li>✅ Anonymous usage analytics help us improve the app - no personal info or song titles</li>
-            <li>✅ Session replays are masked - readable text like song titles and notes is never visible, and payment screens are excluded</li>
+            <li>✅ Anonymous song sharing for Spotify-linked songs is on by default to improve chord suggestions - turn it off anytime in Settings → "Share Songs Anonymously"</li>
+            <li>✅ A random "Support ID" (not your identity) links your anonymous analytics and subscription records - share it with us for support</li>
+            <li>✅ Session replays are masked screen recordings - readable text like song titles and notes is never visible, and payment screens are excluded</li>
             <li>✅ AI chord lookup sends only the song title, artist, and key - no personal info or identity</li>
             <li>✅ Payments are handled entirely by Apple - we never see your card or billing details</li>
-            <li>✅ We don't sell or share your personal data with anyone</li>
-            <li>✅ You can delete all your data by deleting the app</li>
-            <li>✅ Full GDPR compliance - request access, deletion, or correction anytime</li>
+            <li>✅ We don't sell or share your personal data, and never use it for advertising or cross-app tracking</li>
+            <li>✅ You can delete all your local data by deleting the app, or request deletion of your anonymous records</li>
+            <li>✅ GDPR & CCPA rights - request access, deletion, or correction anytime</li>
         </ul>
 
-        <p>We built Fret Not to be a private, personal songbook. Your songs are yours, and yours alone. Anonymous community features help guitarists learn from each other while respecting your privacy.</p>
+        <p>We built Fret Not to be a private, personal songbook. Your notes and manual songs are yours alone, and everything we do collect is anonymous. Optional, anonymous song sharing helps every guitarist get better chord suggestions while respecting your privacy.</p>
+
+        <p style="color: #888; font-size: 0.85rem; margin-top: 2.5rem;"><em>This Privacy Policy is provided for transparency and general information only. It is not legal advice and should be reviewed by qualified legal counsel before launch.</em></p>
     </div>
     {% include footer.html %}
 
