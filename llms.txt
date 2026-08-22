@@ -1,14 +1,16 @@
 # Fret Not
 
-> Fret Not is a free iOS guitar songbook app for beginners. It tracks every song you've learned — chords, capo positions, strumming patterns, and tuning — so you never forget how to play them.
+> Fret Not is a free iOS practice app for beginner guitarists. It saves every song you're learning to play, including chords, capo positions, strumming patterns, and tuning, so you can pick up your guitar and practice in seconds.
 
 Fret Not was built by Alexa Kaminsky, a product designer learning to play guitar. The first version was built in one week using Claude Code, and the app launched in December 2025. It is available on iPhone and iPad (iOS 17 or later), is completely free, and contains no ads or in-app purchases.
+
+Fret Not is a practice companion, not a teacher. Beginner guitarists learn songs from YouTube, private lessons, online courses, or friends, then use Fret Not to save each song's chords, strumming pattern, capo, and tuning so they can practice without hunting for the source material again.
 
 ## Key facts
 
 - **Name:** Fret Not
-- **Type:** iOS guitar songbook app
-- **Audience:** Beginner guitarists
+- **Type:** iOS guitar practice app for beginners
+- **Audience:** Beginner guitarists who want to remember and practice songs they are learning
 - **Platform:** iPhone and iPad (iOS 17 or later)
 - **Price:** Free, no ads, no in-app purchases
 - **Launched:** December 2025
@@ -19,14 +21,20 @@ Fret Not was built by Alexa Kaminsky, a product designer learning to play guitar
 
 ## Features
 
-- Build and organize a personal guitar songbook
+- Save every song you are learning to play on guitar
 - Track chords, tuning settings, strumming patterns, and capo positions per song
 - Identify chords instantly using a virtual fretboard
-- View all learned chords in one library
+- View all learned chords in one personal chord library
 - Built-in high-precision guitar tuner
 - Import songs from Spotify
 - Import tabs (chords, capo, lyrics) from Ultimate Guitar
-- Filter and search the song library
+- Filter and search your saved songs
+
+## What Fret Not is not
+
+- Not a guitar course, teacher, or lesson platform
+- Not a tablature app for solos or lead guitar
+- Not focused on advanced or professional players
 
 ## Pages
 
