@@ -1187,3 +1187,209 @@ a {
         max-width: 240px;
     }
 }
+
+/* ============================================================================
+   Fret Not Pro demo — "manual → Pro" paywall animation
+   Ported from PaywallDemoCard (fretnotapp/GuitarSongbook/Views/PaywallView.swift).
+   Everything is scoped under .fretnot-demo. Brand accent = #F38C03.
+   Light-only to match the landing page (the reference's prefers-color-scheme
+   dark block is intentionally dropped here). Respects prefers-reduced-motion.
+   ============================================================================ */
+.fretnot-demo {
+    /* ---- Design tokens (light) ---- */
+    --fnd-accent:        #F38C03;   /* Color.appAccent */
+    --fnd-accent-text:   #B35A00;   /* Color.appAccentText */
+    --fnd-bg-input:      #FEFCFB;   /* Color.warmInputBackground */
+    --fnd-surface:       #EBE6E0;   /* Color.warmSurface */
+    --fnd-border:        #D2C8BE;   /* Color.inputBorder */
+    --fnd-card-bg:       #FFFFFF;   /* systemBackground */
+    --fnd-card-border:   rgba(0,0,0,0.08);
+    --fnd-card-shadow:   rgba(0,0,0,0.05);
+    --fnd-seg-shadow:    rgba(0,0,0,0.10);
+    --fnd-primary:       #1C1917;   /* Color.primary (near-black, warm) */
+    --fnd-secondary:     #8C857D;   /* Color.secondary */
+    --fnd-on-accent:     #FFFFFF;
+
+    /* ---- Spacing / radii tokens ---- */
+    --fnd-sm: 8px;  --fnd-md: 12px;  --fnd-lg: 16px;  --fnd-xl: 20px;
+    --fnd-r-sm: 4px; --fnd-r-input: 8px; --fnd-r-pill: 10px; --fnd-r-card: 12px;
+
+    /* width is pinned (not shrink-to-fit) so the card doesn't resize frame to
+       frame as the chord/capo content changes — see .fnd-stage min-height too. */
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--fnd-primary);
+    box-sizing: border-box;
+}
+.fretnot-demo *, .fretnot-demo *::before, .fretnot-demo *::after { box-sizing: border-box; }
+
+/* ---- warmCard() ---- */
+.fretnot-demo .fnd-card {
+    background: var(--fnd-card-bg);
+    border-radius: var(--fnd-r-card);
+    border: 0.5px solid var(--fnd-card-border);
+    box-shadow: 0 2px 8px var(--fnd-card-shadow);
+    padding: var(--fnd-xl);
+}
+
+/* ---- caption row ---- */
+.fretnot-demo .fnd-caption {
+    display: flex;
+    align-items: center;
+    gap: var(--fnd-sm);
+    margin-bottom: var(--fnd-md);
+    color: var(--fnd-secondary);
+    transition: color .4s ease-in-out;
+}
+.fretnot-demo .fnd-caption.is-pro { color: var(--fnd-accent); }
+.fretnot-demo .fnd-cap-icon { display: inline-flex; }
+.fretnot-demo .fnd-cap-icon svg { width: 14px; height: 14px; display: block; }
+.fretnot-demo .fnd-cap-text { font-size: 12px; font-weight: 600; }
+.fretnot-demo .fnd-cap-spacer { flex: 1 1 auto; }
+
+/* state badge (FREE / PRO) */
+.fretnot-demo .fnd-badge {
+    font-size: 11px; font-weight: 800; letter-spacing: .02em;
+    padding: 2px var(--fnd-sm);
+    border-radius: var(--fnd-r-sm);
+    color: var(--fnd-secondary);
+    background: transparent;
+    border: 1px solid var(--fnd-border);
+    transition: color .4s ease-in-out, background-color .4s ease-in-out, border-color .4s ease-in-out;
+}
+.fretnot-demo .fnd-badge.is-pro {
+    color: var(--fnd-on-accent);
+    background: var(--fnd-accent);
+    border-color: transparent;
+}
+
+/* ---- crossfade stage ----
+   Both layers share one grid cell (grid-area 1/1) so they stack on top of each
+   other for the opacity crossfade, while the cell — and therefore the card —
+   still grows to the tallest layer's content. (The old position:absolute stage
+   had a fixed 150px height, so the taller Pro frame overflowed the card.) */
+.fretnot-demo .fnd-stage { display: grid; min-height: 150px; }
+.fretnot-demo .fnd-layer {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+    pointer-events: none;
+}
+.fretnot-demo .fnd-layer.is-active { opacity: 1; }
+
+/* ---- manual state ---- */
+.fretnot-demo .fnd-manual { display: flex; flex-direction: column; gap: var(--fnd-md); }
+.fretnot-demo .fnd-input {
+    display: flex; align-items: center;
+    padding: var(--fnd-md);
+    background: var(--fnd-bg-input);
+    border: 1px solid var(--fnd-border);
+    border-radius: var(--fnd-r-input);
+    min-height: 44px;
+}
+.fretnot-demo .fnd-input-text { font-size: 15px; color: var(--fnd-primary); }
+.fretnot-demo .fnd-caret {
+    width: 2px; height: 18px; margin-left: 1px;
+    background: var(--fnd-accent);
+    opacity: 0;
+}
+.fretnot-demo .fnd-caret.on { opacity: 1; }
+
+.fretnot-demo .fnd-capo-row { display: flex; align-items: center; gap: var(--fnd-sm); flex-wrap: wrap; }
+.fretnot-demo .fnd-capo-label { font-size: 15px; font-weight: 600; color: var(--fnd-secondary); }
+.fretnot-demo .fnd-hint { font-size: 11px; color: var(--fnd-secondary); }
+
+/* ---- SelectablePill ---- */
+.fretnot-demo .fnd-pill {
+    display: inline-flex; align-items: center; gap: var(--fnd-xs, 4px);
+    font-size: 15px; font-weight: 600;
+    padding: 9px var(--fnd-md);
+    border-radius: var(--fnd-r-pill);
+    color: var(--fnd-secondary);
+    background: var(--fnd-card-bg);
+    border: 1px solid var(--fnd-border);
+    transition: color .4s ease-in-out, background-color .4s ease-in-out, border-color .4s ease-in-out;
+    white-space: nowrap;
+}
+.fretnot-demo .fnd-pill.is-selected {
+    color: var(--fnd-on-accent);
+    background: var(--fnd-accent);
+    border-color: var(--fnd-accent);
+}
+
+/* ---- premium state ---- */
+.fretnot-demo .fnd-premium { display: flex; flex-direction: column; gap: var(--fnd-md); align-items: flex-start; }
+
+/* DifficultySegment */
+.fretnot-demo .fnd-segment {
+    display: flex; gap: 2px; padding: 3px;
+    width: 100%;
+    background: var(--fnd-surface);
+    border-radius: var(--fnd-r-pill);
+}
+.fretnot-demo .fnd-seg-opt {
+    flex: 1 1 0; text-align: center;
+    font-size: 12px; font-weight: 600;
+    padding: 7px 0;
+    border-radius: var(--fnd-r-input);
+    color: var(--fnd-secondary);
+    background: transparent;
+}
+.fretnot-demo .fnd-seg-opt.is-selected {
+    color: var(--fnd-primary);
+    background: var(--fnd-card-bg);
+    box-shadow: 0 1px 2px var(--fnd-seg-shadow);
+}
+
+/* chord tags (tintedPillStyle) */
+.fretnot-demo .fnd-chords { display: flex; gap: var(--fnd-sm); flex-wrap: wrap; }
+.fretnot-demo .fnd-chord {
+    font-size: 15px; font-weight: 600;
+    padding: var(--fnd-sm) var(--fnd-md);
+    border-radius: var(--fnd-r-pill);
+    color: var(--fnd-accent);
+    background: color-mix(in srgb, var(--fnd-accent) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fnd-accent) 30%, transparent);
+}
+/* Fallback tint for browsers without color-mix() */
+@supports not (background: color-mix(in srgb, red 15%, transparent)) {
+    .fretnot-demo .fnd-chord { background: rgba(243,140,3,0.15); border-color: rgba(243,140,3,0.30); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fretnot-demo .fnd-layer { transition: none; }
+    .fretnot-demo .fnd-caret { display: none; }
+}
+
+/* "Adding a song" section: header + description beside the demo.
+   On mobile the demo/animation always stacks ABOVE the description. */
+.add-song-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5.5vw, 72px);
+    align-items: center;
+}
+.add-song-layout .add-song-text { max-width: 520px; }
+.add-song-layout .add-song-visual { display: flex; justify-content: center; width: 100%; }
+
+@media (max-width: 820px) {
+    .add-song-layout { grid-template-columns: 1fr; gap: 40px; }
+    .add-song-layout .add-song-visual { order: -1; }  /* animation above the description */
+}
+
+/* Feature rows (a phone screenshot beside text): on mobile the screenshot
+   always stacks ABOVE the text, whichever side it sits on for desktop. */
+.feature-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+}
+@media (max-width: 820px) {
+    .feature-split { grid-template-columns: 1fr; gap: 48px; }
+    .feature-split .feature-visual { order: -1; }  /* screenshot above the text */
+}

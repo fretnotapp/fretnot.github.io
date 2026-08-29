@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  FretNot — "manual → Pro" paywall demo animation (web port)
+  ----------------------------------------------------------------------------
+  A faithful HTML/CSS/JS reproduction of PaywallDemoCard from the iOS app
+  (GuitarSongbook/Views/PaywallView.swift). Loops between the free/manual way
+  (typing chords + hunting for a capo by hand) and the Pro way (real chords +
+  capo picked for you across beginner / intermediate / advanced).
+
+  HOW TO EMBED ON THE LANDING PAGE
+  --------------------------------
+  Copy three things into your page:
+    1. the <style id="fretnot-demo-styles"> block
+    2. the <div class="fretnot-demo"> ... </div> markup
+    3. the <script id="fretnot-demo-script"> block (put it after the markup,
+       or anywhere — it self-initializes every .fretnot-demo on the page)
+  Everything is scoped under `.fretnot-demo`, so it won't touch your other
+  styles. You can drop several copies on one page; each animates independently.
+
+  Colors/spacing/radii are the app's real design tokens (Colors.swift,
+  Spacing.swift, CornerRadius.swift). Brand accent = #F38C03.
+  Light by default; a prefers-color-scheme:dark block mirrors the app's dark
+  palette — delete it if your landing page is light-only.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FretNot Pro demo</title>
+<style>
+  /* Page chrome for standalone preview only — NOT needed on your landing page. */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #faf7f5;
+    padding: 40px 16px;
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark) { body { background: #12100f; } }
+</style>
+
+<!-- ▼▼▼ COPY FROM HERE (1/3): styles ▼▼▼ -->
+<style id="fretnot-demo-styles">
+  .fretnot-demo {
+    /* ---- Design tokens (light) ---- */
+    --fnd-accent:        #F38C03;   /* Color.appAccent */
+    --fnd-accent-text:   #B35A00;   /* Color.appAccentText */
+    --fnd-bg-input:      #FEFCFB;   /* Color.warmInputBackground */
+    --fnd-surface:       #EBE6E0;   /* Color.warmSurface */
+    --fnd-border:        #D2C8BE;   /* Color.inputBorder */
+    --fnd-card-bg:       #FFFFFF;   /* systemBackground */
+    --fnd-card-border:   rgba(0,0,0,0.08);
+    --fnd-card-shadow:   rgba(0,0,0,0.05);
+    --fnd-seg-shadow:    rgba(0,0,0,0.10);
+    --fnd-primary:       #1C1917;   /* Color.primary (near-black, warm) */
+    --fnd-secondary:     #8C857D;   /* Color.secondary */
+    --fnd-on-accent:     #FFFFFF;
+
+    /* ---- Spacing / radii tokens ---- */
+    --fnd-sm: 8px;  --fnd-md: 12px;  --fnd-lg: 16px;  --fnd-xl: 20px;
+    --fnd-r-sm: 4px; --fnd-r-input: 8px; --fnd-r-pill: 10px; --fnd-r-card: 12px;
+
+    max-width: 380px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--fnd-primary);
+    box-sizing: border-box;
+  }
+  .fretnot-demo *, .fretnot-demo *::before, .fretnot-demo *::after { box-sizing: border-box; }
+
+  @media (prefers-color-scheme: dark) {
+    .fretnot-demo:not(.fretnot-demo--light) {
+      --fnd-bg-input:    #1C1816;
+      --fnd-surface:     #37302B;
+      --fnd-border:      #4B413A;
+      --fnd-card-bg:     #1A1613;
+      --fnd-card-border: rgba(255,255,255,0.08);
+      --fnd-card-shadow: rgba(0,0,0,0.35);
+      --fnd-seg-shadow:  rgba(0,0,0,0.45);
+      --fnd-primary:     #F5F2EF;
+      --fnd-secondary:   #9A928A;
+    }
+  }
+
+  /* ---- warmCard() ---- */
+  .fretnot-demo .fnd-card {
+    background: var(--fnd-card-bg);
+    border-radius: var(--fnd-r-card);
+    border: 0.5px solid var(--fnd-card-border);
+    box-shadow: 0 2px 8px var(--fnd-card-shadow);
+    padding: var(--fnd-xl);
+  }
+
+  /* ---- caption row ---- */
+  .fretnot-demo .fnd-caption {
+    display: flex;
+    align-items: center;
+    gap: var(--fnd-sm);
+    margin-bottom: var(--fnd-md);
+    color: var(--fnd-secondary);
+    transition: color .4s ease-in-out;
+  }
+  .fretnot-demo .fnd-caption.is-pro { color: var(--fnd-accent); }
+  .fretnot-demo .fnd-cap-icon { display: inline-flex; }
+  .fretnot-demo .fnd-cap-icon svg { width: 14px; height: 14px; display: block; }
+  .fretnot-demo .fnd-cap-text { font-size: 12px; font-weight: 600; }
+  .fretnot-demo .fnd-cap-spacer { flex: 1 1 auto; }
+
+  /* state badge (FREE / PRO) */
+  .fretnot-demo .fnd-badge {
+    font-size: 11px; font-weight: 800; letter-spacing: .02em;
+    padding: 2px var(--fnd-sm);
+    border-radius: var(--fnd-r-sm);
+    color: var(--fnd-secondary);
+    background: transparent;
+    border: 1px solid var(--fnd-border);
+    transition: color .4s ease-in-out, background-color .4s ease-in-out, border-color .4s ease-in-out;
+  }
+  .fretnot-demo .fnd-badge.is-pro {
+    color: var(--fnd-on-accent);
+    background: var(--fnd-accent);
+    border-color: transparent;
+  }
+
+  /* ---- crossfade stage ---- */
+  .fretnot-demo .fnd-stage { position: relative; min-height: 150px; }
+  .fretnot-demo .fnd-layer {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+    pointer-events: none;
+  }
+  .fretnot-demo .fnd-layer.is-active { opacity: 1; }
+
+  /* ---- manual state ---- */
+  .fretnot-demo .fnd-manual { display: flex; flex-direction: column; gap: var(--fnd-md); }
+  .fretnot-demo .fnd-input {
+    display: flex; align-items: center;
+    padding: var(--fnd-md);
+    background: var(--fnd-bg-input);
+    border: 1px solid var(--fnd-border);
+    border-radius: var(--fnd-r-input);
+    min-height: 44px;
+  }
+  .fretnot-demo .fnd-input-text { font-size: 15px; color: var(--fnd-primary); }
+  .fretnot-demo .fnd-caret {
+    width: 2px; height: 18px; margin-left: 1px;
+    background: var(--fnd-accent);
+    opacity: 0;
+  }
+  .fretnot-demo .fnd-caret.on { opacity: 1; }
+
+  .fretnot-demo .fnd-capo-row { display: flex; align-items: center; gap: var(--fnd-sm); flex-wrap: wrap; }
+  .fretnot-demo .fnd-capo-label { font-size: 15px; font-weight: 600; color: var(--fnd-secondary); }
+  .fretnot-demo .fnd-hint { font-size: 11px; color: var(--fnd-secondary); }
+
+  /* ---- SelectablePill ---- */
+  .fretnot-demo .fnd-pill {
+    display: inline-flex; align-items: center; gap: var(--fnd-xs, 4px);
+    font-size: 15px; font-weight: 600;
+    padding: 9px var(--fnd-md);
+    border-radius: var(--fnd-r-pill);
+    color: var(--fnd-secondary);
+    background: var(--fnd-card-bg);
+    border: 1px solid var(--fnd-border);
+    transition: color .4s ease-in-out, background-color .4s ease-in-out, border-color .4s ease-in-out;
+    white-space: nowrap;
+  }
+  .fretnot-demo .fnd-pill.is-selected {
+    color: var(--fnd-on-accent);
+    background: var(--fnd-accent);
+    border-color: var(--fnd-accent);
+  }
+
+  /* ---- premium state ---- */
+  .fretnot-demo .fnd-premium { display: flex; flex-direction: column; gap: var(--fnd-md); align-items: flex-start; }
+
+  /* DifficultySegment */
+  .fretnot-demo .fnd-segment {
+    display: flex; gap: 2px; padding: 3px;
+    width: 100%;
+    background: var(--fnd-surface);
+    border-radius: var(--fnd-r-pill);
+  }
+  .fretnot-demo .fnd-seg-opt {
+    flex: 1 1 0; text-align: center;
+    font-size: 12px; font-weight: 600;
+    padding: 7px 0;
+    border-radius: var(--fnd-r-input);
+    color: var(--fnd-secondary);
+    background: transparent;
+  }
+  .fretnot-demo .fnd-seg-opt.is-selected {
+    color: var(--fnd-primary);
+    background: var(--fnd-card-bg);
+    box-shadow: 0 1px 2px var(--fnd-seg-shadow);
+  }
+
+  /* chord tags (tintedPillStyle) */
+  .fretnot-demo .fnd-chords { display: flex; gap: var(--fnd-sm); flex-wrap: wrap; }
+  .fretnot-demo .fnd-chord {
+    font-size: 15px; font-weight: 600;
+    padding: var(--fnd-sm) var(--fnd-md);
+    border-radius: var(--fnd-r-pill);
+    color: var(--fnd-accent);
+    background: color-mix(in srgb, var(--fnd-accent) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fnd-accent) 30%, transparent);
+  }
+  /* Fallback tint for browsers without color-mix() */
+  @supports not (background: color-mix(in srgb, red 15%, transparent)) {
+    .fretnot-demo .fnd-chord { background: rgba(243,140,3,0.15); border-color: rgba(243,140,3,0.30); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fretnot-demo .fnd-layer { transition: none; }
+    .fretnot-demo .fnd-caret { display: none; }
+  }
+</style>
+<!-- ▲▲▲ COPY TO HERE (1/3) ▲▲▲ -->
+</head>
+<body>
+
+<!-- ▼▼▼ COPY FROM HERE (2/3): markup ▼▼▼ -->
+<div class="fretnot-demo" aria-label="Fret Not Pro looks up real chords for you">
+  <div class="fnd-card">
+    <div class="fnd-caption">
+      <span class="fnd-cap-icon"></span>
+      <span class="fnd-cap-text"></span>
+      <span class="fnd-cap-spacer"></span>
+      <span class="fnd-badge"></span>
+    </div>
+    <div class="fnd-stage">
+      <div class="fnd-layer" data-layer="a"></div>
+      <div class="fnd-layer" data-layer="b"></div>
+    </div>
+  </div>
+</div>
+<!-- ▲▲▲ COPY TO HERE (2/3) ▲▲▲ -->
+
+<!-- ▼▼▼ COPY FROM HERE (3/3): script ▼▼▼ -->
+<script id="fretnot-demo-script">
+(function () {
+  // Frames mirror PaywallDemoCard.frames exactly (order, text, capo, chords, hold).
+  var FRAMES = [
+    { manual: true,  text: "Am",             capo: null, hold: 0.4 },
+    { manual: true,  text: "Am · C",         capo: null, hold: 0.4 },
+    { manual: true,  text: "Am · C · G",     capo: null, hold: 0.4 },
+    { manual: true,  text: "Am · C · G · D", capo: null, hold: 0.7 },
+    { manual: true,  text: "Am · C · G · D", capo: "3",  hold: 0.5 },
+    { manual: true,  text: "Am · C · G · D", capo: "2",  hold: 1.1 },
+    { manual: false, difficulty: "Beginner",     capoInt: 0, chords: ["Am", "C", "G", "D"],           hold: 1.4 },
+    { manual: false, difficulty: "Intermediate", capoInt: 2, chords: ["Am", "Cadd9", "G", "Em7"],      hold: 1.4 },
+    { manual: false, difficulty: "Advanced",     capoInt: 4, chords: ["Am7", "Cmaj7", "G6", "Dsus2"], hold: 1.4 }
+  ];
+  var CAPO_OPTIONS = ["None", "1", "2", "3"];
+  var DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
+
+  var ICON_PENCIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+  var ICON_SPARKLES = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 4.6L18 8.2l-4.4 1.6L12 14l-1.6-4.2L6 8.2l4.4-1.6L12 2z"/><path d="M19 13l.9 2.5L22 16.5l-2.1.9L19 20l-.9-2.6L16 16.5l2.1-1L19 13z"/></svg>';
+
+  function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+
+  function manualHTML(f) {
+    var caretVisible = f.capo === null; // caret only blinks while typing chords
+    var pills = CAPO_OPTIONS.map(function (opt) {
+      var sel = f.capo === opt ? " is-selected" : "";
+      return '<span class="fnd-pill' + sel + '">' + esc(opt) + '</span>';
+    }).join("");
+    return '' +
+      '<div class="fnd-manual">' +
+        '<div class="fnd-input">' +
+          '<span class="fnd-input-text">' + esc(f.text) + '</span>' +
+          '<span class="fnd-caret' + (caretVisible ? " fnd-caret--live" : "") + '"></span>' +
+        '</div>' +
+        '<div class="fnd-capo-row">' +
+          '<span class="fnd-capo-label">Capo</span>' + pills +
+        '</div>' +
+        '<div class="fnd-hint">Guessing the shapes and capo yourself.</div>' +
+      '</div>';
+  }
+
+  function premiumHTML(f) {
+    var seg = DIFFICULTIES.map(function (d) {
+      var sel = d === f.difficulty ? " is-selected" : "";
+      return '<span class="fnd-seg-opt' + sel + '">' + esc(d) + '</span>';
+    }).join("");
+    var capoLabel = f.capoInt === 0 ? "No Capo" : "Capo " + f.capoInt;
+    var chords = f.chords.map(function (c) { return '<span class="fnd-chord">' + esc(c) + '</span>'; }).join("");
+    return '' +
+      '<div class="fnd-premium">' +
+        '<div class="fnd-segment">' + seg + '</div>' +
+        '<span class="fnd-pill is-selected fnd-capo-pill">' + esc(capoLabel) + '</span>' +
+        '<div class="fnd-chords">' + chords + '</div>' +
+      '</div>';
+  }
+
+  // "Identity" decides crossfade vs. in-place update (matches the .id() logic in
+  // SwiftUI): all manual frames share one identity, each premium variant is its own.
+  function identity(step, f) { return f.manual ? "manual" : "premium-" + step; }
+
+  function init(root) {
+    if (root.__fretnotInit) return;
+    root.__fretnotInit = true;
+
+    var capIcon = root.querySelector(".fnd-cap-icon");
+    var capText = root.querySelector(".fnd-cap-text");
+    var caption = root.querySelector(".fnd-caption");
+    var badge   = root.querySelector(".fnd-badge");
+    var layers  = root.querySelectorAll(".fnd-layer");
+    var layerA  = layers[0], layerB = layers[1];
+
+    var step = -1;
+    var elapsed = 0;
+    var activeLayer = layerA;
+    var currentIdentity = null;
+
+    function render(f) {
+      capIcon.innerHTML = f.manual ? ICON_PENCIL : ICON_SPARKLES;
+      capText.textContent = f.manual ? "Typing chords in by hand" : "Real chords, picked for you";
+      caption.classList.toggle("is-pro", !f.manual);
+      badge.textContent = f.manual ? "FREE" : "PRO";
+      badge.classList.toggle("is-pro", !f.manual);
+
+      var html = f.manual ? manualHTML(f) : premiumHTML(f);
+      var id = identity(step, f);
+
+      if (id === currentIdentity) {
+        // Same identity (manual → manual): update in place, no crossfade.
+        activeLayer.innerHTML = html;
+      } else {
+        // Crossfade into the other layer.
+        var incoming = activeLayer === layerA ? layerB : layerA;
+        incoming.innerHTML = html;
+        // force reflow so the opacity transition actually runs
+        void incoming.offsetWidth;
+        incoming.classList.add("is-active");
+        activeLayer.classList.remove("is-active");
+        activeLayer = incoming;
+        currentIdentity = id;
+      }
+    }
+
+    function advance() {
+      step = (step + 1) % FRAMES.length;
+      render(FRAMES[step]);
+    }
+
+    // Main clock: 0.1s tick, advance when the frame's hold elapses (app parity).
+    advance();
+    setInterval(function () {
+      elapsed += 0.1;
+      if (elapsed + 0.001 >= FRAMES[step].hold) {
+        elapsed = 0;
+        advance();
+      }
+    }, 100);
+
+    // Caret blink: 0.5s, only while a live caret is on screen.
+    var caretOn = false;
+    setInterval(function () {
+      var caret = activeLayer.querySelector(".fnd-caret--live");
+      caretOn = caret ? !caretOn : false;
+      var all = root.querySelectorAll(".fnd-caret");
+      for (var i = 0; i < all.length; i++) all[i].classList.remove("on");
+      if (caret && caretOn) caret.classList.add("on");
+    }, 500);
+  }
+
+  function boot() {
+    var nodes = document.querySelectorAll(".fretnot-demo");
+    for (var i = 0; i < nodes.length; i++) init(nodes[i]);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+<!-- ▲▲▲ COPY TO HERE (3/3) ▲▲▲ -->
+
+</body>
+</html>
