@@ -60,23 +60,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ============================================================================
-   Fret Not Pro demo — "manual → Pro" paywall animation
-   Ported from PaywallDemoCard (fretnotapp/GuitarSongbook/Views/PaywallView.swift).
-   Self-initializes every .fretnot-demo on the page; safe if none exist.
-   Frame content, order, timings and identity logic match the app exactly.
+   Fret Not Pro demo — "manual → Pro" animation, using Jolene as the example.
+   Based on PaywallDemoCard (fretnotapp/GuitarSongbook/Views/PaywallView.swift);
+   the landing page uses a Jolene-specific set of frames to make the value
+   concrete: entered by hand you get the hard barre chords (C#m · E · B), while
+   Pro picks chords for your skill level — easy open shapes at capo 4 for a
+   beginner, up to the full barre chords for an advanced player.
+   The three levels are the same song transposed: capo 4 (Am·C·G) = capo 2
+   (Bm·D·A) = no capo (C#m·E·B). Self-initializes every .fretnot-demo; safe if none.
    ============================================================================ */
 (function () {
-  // Frames mirror PaywallDemoCard.frames exactly (order, text, capo, chords, hold).
+  // Jolene, three ways: typed by hand (hard barre chords), then picked for your level.
   var FRAMES = [
-    { manual: true,  text: "Am",             capo: null, hold: 0.4 },
-    { manual: true,  text: "Am · C",         capo: null, hold: 0.4 },
-    { manual: true,  text: "Am · C · G",     capo: null, hold: 0.4 },
-    { manual: true,  text: "Am · C · G · D", capo: null, hold: 0.7 },
-    { manual: true,  text: "Am · C · G · D", capo: "3",  hold: 0.5 },
-    { manual: true,  text: "Am · C · G · D", capo: "2",  hold: 1.1 },
-    { manual: false, difficulty: "Beginner",     capoInt: 0, chords: ["Am", "C", "G", "D"],           hold: 1.4 },
-    { manual: false, difficulty: "Intermediate", capoInt: 2, chords: ["Am", "Cadd9", "G", "Em7"],      hold: 1.4 },
-    { manual: false, difficulty: "Advanced",     capoInt: 4, chords: ["Am7", "Cmaj7", "G6", "Dsus2"], hold: 1.4 }
+    { manual: true,  text: "C#m",         capo: null,   hold: 0.45 },
+    { manual: true,  text: "C#m · E",     capo: null,   hold: 0.45 },
+    { manual: true,  text: "C#m · E · B", capo: null,   hold: 0.85 },
+    { manual: true,  text: "C#m · E · B", capo: "None", hold: 1.7 },
+    { manual: false, difficulty: "Beginner",     capoInt: 4, chords: ["Am", "C", "G"],  hold: 1.7 },
+    { manual: false, difficulty: "Intermediate", capoInt: 2, chords: ["Bm", "D", "A"],  hold: 1.4 },
+    { manual: false, difficulty: "Advanced",     capoInt: 0, chords: ["C#m", "E", "B"], hold: 1.4 }
   ];
   var CAPO_OPTIONS = ["None", "1", "2", "3"];
   var DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
@@ -142,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function render(f) {
       capIcon.innerHTML = f.manual ? ICON_PENCIL : ICON_SPARKLES;
-      capText.textContent = f.manual ? "Typing chords in by hand" : "Real chords, picked for you";
+      capText.textContent = f.manual ? "Jolene, entered by hand" : "Jolene, picked for your level";
       caption.classList.toggle("is-pro", !f.manual);
       badge.textContent = f.manual ? "FREE" : "PRO";
       badge.classList.toggle("is-pro", !f.manual);
