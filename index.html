@@ -103,7 +103,8 @@
       "url": "https://fretnot.app",
       "logo": "https://fretnot.app/fret_not_icon.png",
       "sameAs": [
-        "https://www.instagram.com/fretnotapp/"
+        "https://www.instagram.com/fretnotapp/",
+        "https://apps.apple.com/app/id6756530936"
       ]
     }
     </script>
@@ -287,13 +288,14 @@
       .card-lift { transition:all .3s cubic-bezier(.4,0,.2,1); }
       .card-lift:hover { transform:translateY(-4px); box-shadow:0 8px 24px rgba(0,0,0,0.12); }
 
-      /* FAQ accordions (native <details>; answers stay in the DOM for SEO/AEO) */
+      /* FAQ accordions (native <details>; question is an <h3>, answers stay in the DOM for SEO/AEO) */
       #faq details { background:#fff; border:0.5px solid rgba(0,0,0,0.08); border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
-      #faq summary { list-style:none; cursor:pointer; padding:22px 28px; font-size:18px; font-weight:700; letter-spacing:-0.01em; color:#3D2E1F; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+      #faq summary { list-style:none; cursor:pointer; padding:22px 28px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
       #faq summary::-webkit-details-marker { display:none; }
       #faq summary::marker { content:""; }
-      #faq .faq-icon { flex-shrink:0; font-size:24px; font-weight:400; color:#E57020; line-height:1; transition:transform .2s cubic-bezier(.4,0,.2,1); }
-      #faq details[open] .faq-icon { transform:rotate(45deg); }
+      #faq summary h3 { margin:0; font-size:18px; font-weight:700; letter-spacing:-0.01em; color:#3D2E1F; }
+      #faq summary::after { content:"+"; display:inline-block; flex-shrink:0; font-size:24px; font-weight:400; color:#E57020; line-height:1; transition:transform .2s cubic-bezier(.4,0,.2,1); }
+      #faq details[open] summary::after { transform:rotate(45deg); }
       #faq .faq-a { padding:0 28px 24px; font-size:16px; line-height:1.7; color:#6D5A4A; }
     </style>
 </head>
@@ -328,7 +330,7 @@
 
 <!-- Positioning / differentiators -->
 <section class="fade-in-up" style="max-width:900px; margin:0 auto; padding:clamp(32px,5vw,48px) 24px 0; text-align:center">
-  <p style="margin:0; font-size:clamp(16px,2vw,18px); line-height:1.6; color:#6D5A4A">Not a lessons app. Fret Not is for players who already know a few chords and want to keep the songs they&rsquo;ve learned. <strong style="color:#3D2E1F">No ads, no account</strong>.</p>
+  <p style="margin:0; font-size:clamp(16px,2vw,18px); line-height:1.6; color:#6D5A4A">Not a lessons app. Fret Not is for players who already know a few chords and want to keep the songs they&rsquo;ve learned. <strong style="color:#3D2E1F">No ads, no clutter</strong>.</p>
 </section>
 
 <!-- Pain points -->
@@ -467,7 +469,7 @@
     </div>
     <div class="card-lift" style="background:#fff; border:0.5px solid rgba(0,0,0,0.08); border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); padding:32px">
       <h3 style="margin:0 0 10px; font-size:21px; font-weight:700; letter-spacing:-0.01em">iCloud sync, no account</h3>
-      <p style="margin:0; font-size:16px; line-height:1.65; color:#6D5A4A">Your songs follow you from iPhone to iPad through your own iCloud. There is no sign-up, no password, and no profile to fill in.</p>
+      <p style="margin:0; font-size:16px; line-height:1.65; color:#6D5A4A">Your songs follow you from iPhone to iPad through your own iCloud, so your songbook is the same on every device.</p>
     </div>
     <div class="card-lift" style="background:#fff; border:0.5px solid rgba(0,0,0,0.08); border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); padding:32px">
       <h3 style="margin:0 0 10px; font-size:21px; font-weight:700; letter-spacing:-0.01em">Build a practice streak</h3>
@@ -488,79 +490,79 @@
   </div>
   <div style="display:grid; gap:16px">
     <details open>
-      <summary><span>How do you remember guitar chords for a song you just learned?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>How do you remember guitar chords for a song you just learned?</h3></summary>
       <div class="faq-a">You do not have to rely on memory. Save a song once and Fret Not keeps its chords, capo and strumming, so you can pull it up weeks later and play instead of learning it from scratch again.</div>
     </details>
     <details>
-      <summary><span>Does Fret Not teach you to play?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Does Fret Not teach you to play?</h3></summary>
       <div class="faq-a">No, and that is on purpose. Fret Not is for people who already know a few chords and want to keep playing. For technique, a teacher or a video course will serve you better. This is what you open on the days in between.</div>
     </details>
     <details>
-      <summary><span>Is there an app to keep a song&rsquo;s chords, capo and notes together?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Is there an app to keep a song&rsquo;s chords, capo and notes together?</h3></summary>
       <div class="faq-a">Yes. Every song in Fret Not holds its chords, tuning, capo position, strumming pattern and a free-text note on one screen, and you can pin a link to the lyrics or tutorial you learned it from. It works as a digital binder for guitar players, without the ring binder.</div>
     </details>
     <details>
-      <summary><span>Will it show me where to put my fingers?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Will it show me where to put my fingers?</h3></summary>
       <div class="faq-a">Yes. Every chord comes with a diagram showing exactly where your fingers go, numbered finger by finger, so you are never left guessing a shape.</div>
     </details>
     <details>
-      <summary><span>How do you record strumming patterns for each song?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>How do you record strumming patterns for each song?</h3></summary>
       <div class="faq-a">Each song has a strumming field where you write the pattern down in whatever shorthand you already use, such as D D U U D U. It sits next to the chords, so you get the rhythm and the shapes in one glance.</div>
     </details>
     <details>
-      <summary><span>Does Fret Not support alternate tunings?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Does Fret Not support alternate tunings?</h3></summary>
       <div class="faq-a">Yes. Each song can use standard tuning or an alternate like Drop D or Open G, and the built-in tuner is tuning-aware, so it tunes each string to whatever tuning the song is set to.</div>
     </details>
     <details>
-      <summary><span>Can I add my own chord shapes?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Can I add my own chord shapes?</h3></summary>
       <div class="faq-a">Yes. Create custom chords with the built-in chord identifier, and pick a different voicing for any chord in a song.</div>
     </details>
     <details>
-      <summary><span>Can I play the song while I practice?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Can I play the song while I practice?</h3></summary>
       <div class="faq-a">Yes. Any song you link to Spotify plays straight from Fret Not, so you can hear the record and strum along with the chords on screen. Songs you add from Spotify come in with their album art, and you can import a whole playlist at once.</div>
     </details>
     <details>
-      <summary><span>Do guitar chord charts work offline?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Do guitar chord charts work offline?</h3></summary>
       <div class="faq-a">Yes. Your songs and their chord shapes live on your device, so they open with no connection at all. Looking up chords for a brand new song with Pro needs the internet, but everything already saved does not.</div>
     </details>
     <details>
-      <summary><span>What is Fret Not Pro?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>What is Fret Not Pro?</h3></summary>
       <div class="faq-a">Pro looks up the chords for any song you add and matches them to your skill level. Instead of the barre chords other apps hand you, it suggests easy open shapes and the capo to play them with, so a song like Jolene comes back beginner-friendly at capo 4 rather than as C#m and B. It is $3.99 a month or $29.99 a year, and everything else in the app stays free.</div>
     </details>
     <details>
-      <summary><span>Will Pro know my song?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Will Pro know my song?</h3></summary>
       <div class="faq-a">Almost always, including plenty of less common and non-English songs. A small number of very obscure songs cannot be found automatically, and you can always add those chords by hand.</div>
     </details>
     <details>
-      <summary><span>What if the chords Pro suggests aren&rsquo;t right?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>What if the chords Pro suggests aren&rsquo;t right?</h3></summary>
       <div class="faq-a">You can fix any chord by hand, and your change is saved to the song. Pro checks its suggestions against the song&rsquo;s detected key and improves over time, but you always decide what your song ends up with.</div>
     </details>
     <details>
-      <summary><span>Is there a free trial?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Is there a free trial?</h3></summary>
       <div class="faq-a">There is no separate trial. The app itself is free: add as many songs as you like, use the tuner and chord library, and type in chords yourself. Pro adds the automatic chord and capo suggestions on top.</div>
     </details>
     <details>
-      <summary><span>What can I do about chords without Pro?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>What can I do about chords without Pro?</h3></summary>
       <div class="faq-a">Type them in yourself. Free gives you a card that says &ldquo;Unlock the real chords&rdquo; where the automatic lookup would go, and any chord you enter by hand still gets a full shape diagram.</div>
     </details>
     <details>
-      <summary><span>Can I cancel Pro?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Can I cancel Pro?</h3></summary>
       <div class="faq-a">Any time, from your Apple subscriptions. You keep Pro until the end of the period you paid for.</div>
     </details>
     <details>
-      <summary><span>If I cancel Pro, do I lose the chords it found?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>If I cancel Pro, do I lose the chords it found?</h3></summary>
       <div class="faq-a">No. Any chords Pro looked up are saved onto your songs and keep showing after you cancel. You just cannot run new lookups until you resubscribe.</div>
     </details>
     <details>
-      <summary><span>Do I need an account?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Do I need an account?</h3></summary>
       <div class="faq-a">No. Pro is an in-app purchase through the App Store, so it follows your Apple ID. Your songs live on your device and in your own iCloud, and we never sell your personal data.</div>
     </details>
     <details>
-      <summary><span>Does it sync between my iPhone and iPad?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Does it sync between my iPhone and iPad?</h3></summary>
       <div class="faq-a">Yes, through your own iCloud, with no account or sign-in. Add a song on one device and it shows up on the other.</div>
     </details>
     <details>
-      <summary><span>Does the tuner record me?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+      <summary><h3>Does the tuner record me?</h3></summary>
       <div class="faq-a">No. The tuner listens through your microphone to detect pitch in real time. The audio is processed on your device and is never recorded or sent anywhere.</div>
     </details>
   </div>
