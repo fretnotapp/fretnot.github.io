@@ -39,50 +39,43 @@
     <link rel="icon" type="image/png" href="fret_not_icon.png">
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Content styled to match the landing page's warm palette and type
+           (shared nav + footer styles live in styles.css). */
+        body { background:#FAF7F5; }
         .about-section {
-            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
-            padding: 120px 0;
+            background: transparent;
+            padding: clamp(64px,9vw,110px) 0;
         }
         .about-content {
             max-width: 700px;
             margin: 0 auto;
-            padding: 0 20px;
-            line-height: 1.8;
+            padding: 0 24px;
         }
         .about-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #1a1a1a;
+            font-size: clamp(32px,4.6vw,46px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: #3D2E1F;
         }
         .about-content p {
-            margin-bottom: 1.5rem;
-            color: #4a4a4a;
+            margin-bottom: 1.4rem;
+            color: #6D5A4A;
             font-size: 18px;
+            line-height: 1.7;
         }
         .about-content p:first-of-type {
             font-size: 20px;
             font-weight: 600;
-            color: #2a2a2a;
+            color: #3D2E1F;
         }
+        .about-content a { color: #E57020; }
+        .about-content a:hover { color: #B35A00; }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-                        <img src="fret_not_icon.png" alt="Fret Not" class="logo-icon">
-                        <span class="logo-text">Fret Not</span>
-                    </a>
-                </div>
-                <div class="nav-links">
-                    <a href="https://apps.apple.com/app/id6756530936" target="_blank" rel="noopener noreferrer" class="cta-button-small">Download</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    {% include nav.html %}
 
     <section class="about-section">
         <div class="about-content">

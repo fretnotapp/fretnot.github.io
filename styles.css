@@ -1393,3 +1393,22 @@ a {
     .feature-split { grid-template-columns: 1fr; gap: 48px; }
     .feature-split .feature-visual { order: -1; }  /* screenshot above the text */
 }
+
+/* ==========================================================================
+   Shared site nav + footer
+   Used by _includes/nav.html and _includes/footer.html on every page.
+   Keep the markup in those includes and the styling here so the two never
+   drift apart again.
+   ========================================================================== */
+nav a, footer a { text-decoration: none; }
+.nav-link { transition: color .2s cubic-bezier(.4,0,.2,1); }
+.nav-link:hover { color: #E57020; }
+.btn-cta { transition: all .2s cubic-bezier(.4,0,.2,1); }
+.btn-cta:hover { background: #B35A00; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+.foot-link { transition: color .15s cubic-bezier(.4,0,.2,1); }
+.foot-link:hover { color: #E57020; }
+@media (max-width: 760px) { #nav-links { display: none !important; } }
+
+/* Pain-points "you are not alone" stat rows: big number stacked above its
+   caption so the full stat reads cleanly at any width. */
+.stat { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }

@@ -30,32 +30,41 @@
     <link rel="icon" type="image/png" href="fret_not_icon.png">
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Content styled to match the landing page's warm palette and type
+           (shared nav + footer styles live in styles.css). */
+        body { background:#FAF7F5; }
         .privacy-content {
             max-width: 800px;
             margin: 0 auto;
-            padding: 60px 20px;
-            line-height: 1.8;
+            padding: clamp(48px,7vw,72px) 24px;
+            line-height: 1.7;
         }
         .privacy-content h1 {
-            font-size: 2.5rem;
+            font-size: clamp(32px,4.6vw,44px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
             margin-bottom: 1rem;
-            color: #1a1a1a;
+            color: #3D2E1F;
         }
         .privacy-content h2 {
-            font-size: 1.75rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
-            color: #2a2a2a;
+            color: #3D2E1F;
         }
         .privacy-content h3 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
-            color: #3a3a3a;
+            color: #3D2E1F;
         }
         .privacy-content p {
             margin-bottom: 1rem;
-            color: #4a4a4a;
+            color: #6D5A4A;
         }
         .privacy-content ul {
             margin-bottom: 1rem;
@@ -63,36 +72,22 @@
         }
         .privacy-content li {
             margin-bottom: 0.5rem;
-            color: #4a4a4a;
+            color: #6D5A4A;
         }
         .privacy-content strong {
-            color: #2a2a2a;
+            color: #3D2E1F;
         }
+        .privacy-content a { color: #E57020; }
+        .privacy-content a:hover { color: #B35A00; }
         .last-updated {
-            color: #888;
+            color: #9A8A7C;
             font-size: 0.9rem;
             margin-bottom: 2rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-                        <img src="fret_not_icon.png" alt="Fret Not" class="logo-icon">
-                        <span class="logo-text">Fret Not</span>
-                    </a>
-                </div>
-                <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="https://apps.apple.com/app/id6756530936" target="_blank" rel="noopener noreferrer" class="cta-button-small">Download</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    {% include nav.html %}
 
     <div class="privacy-content">
         <h1>Privacy Policy</h1>
@@ -115,7 +110,7 @@
             <li><strong>App Settings:</strong> Your preferences and configuration choices</li>
         </ul>
 
-        <p style="background-color: #f0f7ff; border-left: 4px solid #0066cc; padding: 1rem; margin: 1.5rem 0;"><strong>Your Privacy is Our Priority:</strong> There are no accounts and no login, so your identity stays anonymous. Your notes, lyrics, custom chord fingerings, and any songs you enter manually stay on your device and are never sent to us. For songs you link to Spotify, some anonymous song information is shared by default to improve chord suggestions for everyone; you can turn this off at any time in Settings (see below).</p>
+        <p style="background-color: #FFF1E6; border-left: 4px solid #E57020; padding: 1rem; margin: 1.5rem 0;"><strong>Your Privacy is Our Priority:</strong> There are no accounts and no login, so your identity stays anonymous. Your notes, lyrics, custom chord fingerings, and any songs you enter manually stay on your device and are never sent to us. For songs you link to Spotify, some anonymous song information is shared by default to improve chord suggestions for everyone; you can turn this off at any time in Settings (see below).</p>
 
         <h3>Anonymous Identifier (Support ID)</h3>
         <p>When you first open the App, it generates a random anonymous identifier (a UUID) and stores it on your device. This identifier:</p>
@@ -320,7 +315,7 @@
         </ul>
         <p>When contacting us for support or to make a data request, you can include your <strong>Support ID</strong> (found in the App under Settings) so we can locate the anonymous records associated with your install.</p>
 
-        <hr style="margin: 3rem 0; border: none; border-top: 1px solid #e0e0e0;">
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(61,46,31,0.12);">
 
         <h2>Summary</h2>
 
@@ -341,7 +336,7 @@
 
         <p>We built Fret Not to be a private, personal songbook. Your notes and manual songs are yours alone, and everything we do collect is anonymous. Optional, anonymous song sharing helps every guitarist get better chord suggestions while respecting your privacy.</p>
 
-        <p style="color: #888; font-size: 0.85rem; margin-top: 2.5rem;"><em>This Privacy Policy is provided for transparency and general information only. It is not legal advice and should be reviewed by qualified legal counsel before launch.</em></p>
+        <p style="color: #9A8A7C; font-size: 0.85rem; margin-top: 2.5rem;"><em>This Privacy Policy is provided for transparency and general information only. It is not legal advice and should be reviewed by qualified legal counsel before launch.</em></p>
     </div>
     {% include footer.html %}
 
