@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fret Not - Reel</title>
+  <style>
+    /* ---- Reel frame (namespaced r-* so nothing collides) ---- */
+    html, body { margin: 0; height: 100%; background: #000; }
+    body {
+      display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .r-stage {
+      position: relative; height: 100vh; aspect-ratio: 9 / 16; overflow: hidden;
+      color: #fff; display: flex; flex-direction: column;
+      background:
+        radial-gradient(120% 65% at 50% 22%, rgba(229,112,32,0.22), rgba(229,112,32,0) 60%),
+        linear-gradient(180deg, #40301F 0%, #2C2013 55%, #241a10 100%);
+    }
+    .r-stage::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 16.6%),
+        repeating-linear-gradient(0deg,  rgba(255,255,255,0.035) 0 1px, transparent 1px 9%);
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000 15%, #000 82%, transparent);
+              mask-image: linear-gradient(180deg, transparent, #000 15%, #000 82%, transparent);
+    }
+    .r-chip {
+      position: absolute; z-index: 1; padding: 1.0vh 1.7vh; border-radius: 999px;
+      background: rgba(0,0,0,0.30); border: 0.5px solid rgba(255,255,255,0.10);
+      color: rgba(240,220,200,0.55); font-weight: 700; font-size: 2.1vh;
+    }
+    .r-hook { z-index: 2; text-align: center; padding: 11vh 7vw 0; }
+    .r-eyebrow {
+      font-size: 1.8vh; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #F38C03; margin-bottom: 1.6vh;
+    }
+    .r-hook h1 {
+      margin: 0; font-size: 4.6vh; line-height: 1.08; font-weight: 800; letter-spacing: -0.02em;
+      color: #fff; text-wrap: balance;
+    }
+    .r-demo {
+      z-index: 2; flex: 1 1 auto; min-height: 0;
+      display: flex; align-items: center; justify-content: center; padding: 3vh 8%;
+    }
+    .r-demo .fretnot-demo { transform: scale(1.04); transform-origin: center; }
+    .r-foot { z-index: 2; text-align: center; padding: 0 7vw 11vh; }
+    .r-wordmark {
+      font-size: 4.4vh; font-weight: 800; letter-spacing: -0.02em; color: #fff;
+      display: inline-flex; align-items: center; gap: 1.2vh;
+    }
+    .r-pro {
+      font-size: 1.8vh; font-weight: 800; letter-spacing: 0.06em;
+      background: #E57020; color: #fff; padding: 0.5vh 1.2vh; border-radius: 0.8vh;
+    }
+    .r-cta { margin-top: 1.6vh; font-size: 2.3vh; color: rgba(255,255,255,0.78); font-weight: 500; }
+
+    /* ---- Demo card styles (from styles.css, scoped under .fretnot-demo) ---- */
+    .fretnot-demo {
+      --fnd-accent:#F38C03; --fnd-accent-text:#B35A00; --fnd-bg-input:#FEFCFB;
+      --fnd-surface:#EBE6E0; --fnd-border:#D2C8BE; --fnd-card-bg:#FFFFFF;
+      --fnd-card-border:rgba(0,0,0,0.08); --fnd-card-shadow:rgba(0,0,0,0.05);
+      --fnd-seg-shadow:rgba(0,0,0,0.10); --fnd-primary:#1C1917; --fnd-secondary:#8C857D;
+      --fnd-on-accent:#FFFFFF;
+      --fnd-sm:8px; --fnd-md:12px; --fnd-lg:16px; --fnd-xl:20px;
+      --fnd-r-sm:4px; --fnd-r-input:8px; --fnd-r-pill:10px; --fnd-r-card:12px;
+      width:100%; max-width:380px; margin:0 auto;
+      font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased; color:var(--fnd-primary); box-sizing:border-box;
+    }
+    .fretnot-demo *, .fretnot-demo *::before, .fretnot-demo *::after { box-sizing:border-box; }
+    .fretnot-demo .fnd-card {
+      background:var(--fnd-card-bg); border-radius:var(--fnd-r-card);
+      border:0.5px solid var(--fnd-card-border); box-shadow:0 2px 8px var(--fnd-card-shadow); padding:var(--fnd-xl);
+    }
+    .fretnot-demo .fnd-caption {
+      display:flex; align-items:center; gap:var(--fnd-sm); margin-bottom:var(--fnd-md);
+      color:var(--fnd-secondary); transition:color .4s ease-in-out;
+    }
+    .fretnot-demo .fnd-caption.is-pro { color:var(--fnd-accent); }
+    .fretnot-demo .fnd-cap-icon { display:inline-flex; }
+    .fretnot-demo .fnd-cap-icon svg { width:14px; height:14px; display:block; }
+    .fretnot-demo .fnd-cap-text { font-size:12px; font-weight:600; }
+    .fretnot-demo .fnd-cap-spacer { flex:1 1 auto; }
+    .fretnot-demo .fnd-badge {
+      font-size:11px; font-weight:800; letter-spacing:.02em; padding:2px var(--fnd-sm);
+      border-radius:var(--fnd-r-sm); color:var(--fnd-secondary); background:transparent;
+      border:1px solid var(--fnd-border);
+      transition:color .4s ease-in-out, background-color .4s ease-in-out, border-color .4s ease-in-out;
+    }
+    .fretnot-demo .fnd-badge.is-pro { color:var(--fnd-on-accent); background:var(--fnd-accent); border-color:transparent; }
+    /* min-height bumped so the card doesn't shrink at the loop point (diagrams are taller). */
+    .fretnot-demo .fnd-stage { display:grid; min-height:212px; }
+    .fretnot-demo .fnd-layer { grid-area:1 / 1; opacity:0; transition:opacity .5s ease-in-out; pointer-events:none; }
+    .fretnot-demo .fnd-layer.is-active { opacity:1; }
+    .fretnot-demo .fnd-manual { display:flex; flex-direction:column; gap:var(--fnd-md); }
+    .fretnot-demo .fnd-input {
+      display:flex; align-items:center; padding:var(--fnd-md); background:var(--fnd-bg-input);
+      border:1px solid var(--fnd-border); border-radius:var(--fnd-r-input); min-height:44px;
+    }
+    .fretnot-demo .fnd-input-text { font-size:15px; color:var(--fnd-primary); }
+    .fretnot-demo .fnd-caret { width:2px; height:18px; margin-left:1px; background:var(--fnd-accent); opacity:0; }
+    .fretnot-demo .fnd-caret.on { opacity:1; }
+    .fretnot-demo .fnd-capo-row { display:flex; align-items:center; gap:var(--fnd-sm); flex-wrap:wrap; }
+    .fretnot-demo .fnd-capo-label { font-size:15px; font-weight:600; color:var(--fnd-secondary); }
+    .fretnot-demo .fnd-hint { font-size:11px; color:var(--fnd-secondary); }
+    .fretnot-demo .fnd-pill {
+      display:inline-flex; align-items:center; gap:4px; font-size:15px; font-weight:600;
+      padding:9px var(--fnd-md); border-radius:var(--fnd-r-pill); color:var(--fnd-secondary);
+      background:var(--fnd-card-bg); border:1px solid var(--fnd-border);
+      transition:color .4s ease-in-out, background-color .4s ease-in-out, border-color .4s ease-in-out; white-space:nowrap;
+    }
+    .fretnot-demo .fnd-pill.is-selected { color:var(--fnd-on-accent); background:var(--fnd-accent); border-color:var(--fnd-accent); }
+    .fretnot-demo .fnd-premium { display:flex; flex-direction:column; gap:var(--fnd-md); align-items:flex-start; }
+    .fretnot-demo .fnd-segment { display:flex; gap:2px; padding:3px; width:100%; background:var(--fnd-surface); border-radius:var(--fnd-r-pill); }
+    .fretnot-demo .fnd-seg-opt {
+      flex:1 1 0; text-align:center; font-size:12px; font-weight:600; padding:7px 0;
+      border-radius:var(--fnd-r-input); color:var(--fnd-secondary); background:transparent;
+    }
+    .fretnot-demo .fnd-seg-opt.is-selected { color:var(--fnd-primary); background:var(--fnd-card-bg); box-shadow:0 1px 2px var(--fnd-seg-shadow); }
+
+    /* ---- Chord diagrams (new: replaces the text chord tags) ---- */
+    .fretnot-demo .fnd-diagrams { display:flex; gap:var(--fnd-sm); width:100%; justify-content:space-between; }
+    .fretnot-demo .fnd-dia { display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .fretnot-demo .fnd-dia-name { font-size:14px; font-weight:700; color:var(--fnd-primary); }
+    .fretnot-demo .fnd-dia svg { display:block; }
+  </style>
+</head>
+<body>
+  <div class="r-stage">
+    <span class="r-chip" style="top: 4%;  left: 7%;  transform: rotate(-7deg);">C#m</span>
+    <span class="r-chip" style="top: 6%;  right: 8%; transform: rotate(6deg);">B</span>
+    <span class="r-chip" style="top: 12%; left: 11%; transform: rotate(4deg);">F</span>
+    <span class="r-chip" style="top: 13%; right: 10%; transform: rotate(-5deg);">Bm</span>
+
+    <div class="r-hook">
+      <div class="r-eyebrow">Introducing Fret&nbsp;Not Pro</div>
+      <h1>Any song,<br>in chords a beginner can play.</h1>
+    </div>
+
+    <div class="r-demo">
+      <div class="fretnot-demo">
+        <div class="fnd-card">
+          <div class="fnd-caption">
+            <span class="fnd-cap-icon"></span>
+            <span class="fnd-cap-text"></span>
+            <span class="fnd-cap-spacer"></span>
+            <span class="fnd-badge"></span>
+          </div>
+          <div class="fnd-stage">
+            <div class="fnd-layer" data-layer="a"></div>
+            <div class="fnd-layer" data-layer="b"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="r-foot">
+      <div class="r-wordmark">Fret&nbsp;Not <span class="r-pro">PRO</span></div>
+      <div class="r-cta">Download now,<br>upgrade in the app</div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    // Jolene, three ways: typed by hand (hard barre chords), then picked for your level.
+    var FRAMES = [
+      { manual: true,  text: "C#m",         capo: null,   hold: 0.45 },
+      { manual: true,  text: "C#m · E",     capo: null,   hold: 0.45 },
+      { manual: true,  text: "C#m · E · B", capo: null,   hold: 0.85 },
+      { manual: true,  text: "C#m · E · B", capo: "None", hold: 1.7 },
+      { manual: false, difficulty: "Beginner",     capoInt: 4, chords: ["Am", "C", "G"],  hold: 1.9 },
+      { manual: false, difficulty: "Intermediate", capoInt: 2, chords: ["Bm", "D", "A"],  hold: 1.5 },
+      { manual: false, difficulty: "Advanced",     capoInt: 0, chords: ["C#m", "E", "B"], hold: 1.5 }
+    ];
+    var CAPO_OPTIONS = ["None", "1", "2", "3"];
+    var DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
+
+    // Chord shapes, low->high string [E A D G B e]; -1 = muted, 0 = open, n = fret.
+    var SHAPES = {
+      "Am":  [-1,0,2,2,1,0],
+      "C":   [-1,3,2,0,1,0],
+      "G":   [3,2,0,0,0,3],
+      "Bm":  [-1,2,4,4,3,2],
+      "D":   [-1,-1,0,2,3,2],
+      "A":   [-1,0,2,2,2,0],
+      "C#m": [-1,4,6,6,5,4],
+      "E":   [0,2,2,1,0,0],
+      "B":   [-1,2,4,4,4,2]
+    };
+
+    // Render one chord diagram as SVG.
+    function chordSVG(name) {
+      var frets = SHAPES[name];
+      var fretted = frets.filter(function (f) { return f > 0; });
+      var maxF = fretted.length ? Math.max.apply(null, fretted) : 0;
+      var minF = fretted.length ? Math.min.apply(null, fretted) : 0;
+      var rows = 5, start, nut;
+      if (maxF <= 5) { start = 1; nut = true; } else { start = minF; nut = false; }
+
+      var padL = nut ? 13 : 22, padR = 11, padTop = 18, padBot = 8;
+      var sGap = 11, fGap = 14, board = sGap * 5;
+      var W = padL + board + padR, H = padTop + fGap * rows + padBot;
+      var xs = [], i;
+      for (i = 0; i < 6; i++) xs.push(padL + i * sGap);
+      var top = padTop, left = xs[0], right = xs[5];
+
+      var s = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" fill="none">';
+
+      // fret lines
+      for (i = 0; i <= rows; i++) {
+        var y = top + i * fGap;
+        var isNut = (nut && i === 0);
+        s += '<line x1="' + left + '" y1="' + y + '" x2="' + right + '" y2="' + y +
+             '" stroke="' + (isNut ? '#1C1917' : '#B7ADA2') + '" stroke-width="' + (isNut ? 2.6 : 1) + '"/>';
+      }
+      // strings
+      for (i = 0; i < 6; i++) {
+        s += '<line x1="' + xs[i] + '" y1="' + top + '" x2="' + xs[i] + '" y2="' + (top + fGap * rows) +
+             '" stroke="#B7ADA2" stroke-width="1"/>';
+      }
+      // position label for barre shapes up the neck
+      if (!nut) {
+        s += '<text x="' + (left - 8) + '" y="' + (top + fGap * 0.85) + '" text-anchor="end" ' +
+             'font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" ' +
+             'fill="#8C857D">' + start + 'fr</text>';
+      }
+      // open / muted markers + dots
+      for (i = 0; i < 6; i++) {
+        var f = frets[i], mx = xs[i], my = top - 7;
+        if (f === 0) {
+          s += '<circle cx="' + mx + '" cy="' + my + '" r="2.6" stroke="#8C857D" stroke-width="1.1" fill="none"/>';
+        } else if (f < 0) {
+          s += '<path d="M' + (mx - 2.6) + ' ' + (my - 2.6) + ' L' + (mx + 2.6) + ' ' + (my + 2.6) +
+               ' M' + (mx + 2.6) + ' ' + (my - 2.6) + ' L' + (mx - 2.6) + ' ' + (my + 2.6) +
+               '" stroke="#8C857D" stroke-width="1.1" stroke-linecap="round"/>';
+        }
+        if (f > 0) {
+          var row = f - start + 1;
+          if (row >= 1 && row <= rows) {
+            var cy = top + (row - 0.5) * fGap;
+            s += '<circle cx="' + mx + '" cy="' + cy + '" r="4" fill="#1C1917"/>';
+          }
+        }
+      }
+      s += '</svg>';
+      return s;
+    }
+
+    var ICON_PENCIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+    var ICON_SPARKLES = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 4.6L18 8.2l-4.4 1.6L12 14l-1.6-4.2L6 8.2l4.4-1.6L12 2z"/><path d="M19 13l.9 2.5L22 16.5l-2.1.9L19 20l-.9-2.6L16 16.5l2.1-1L19 13z"/></svg>';
+
+    function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+
+    function manualHTML(f) {
+      var caretVisible = f.capo === null;
+      var pills = CAPO_OPTIONS.map(function (opt) {
+        return '<span class="fnd-pill' + (f.capo === opt ? " is-selected" : "") + '">' + esc(opt) + '</span>';
+      }).join("");
+      return '<div class="fnd-manual">' +
+          '<div class="fnd-input"><span class="fnd-input-text">' + esc(f.text) + '</span>' +
+            '<span class="fnd-caret' + (caretVisible ? " fnd-caret--live" : "") + '"></span></div>' +
+          '<div class="fnd-capo-row"><span class="fnd-capo-label">Capo</span>' + pills + '</div>' +
+          '<div class="fnd-hint">Working out the chord shapes and capo yourself.</div>' +
+        '</div>';
+    }
+
+    function premiumHTML(f) {
+      var seg = DIFFICULTIES.map(function (d) {
+        return '<span class="fnd-seg-opt' + (d === f.difficulty ? " is-selected" : "") + '">' + esc(d) + '</span>';
+      }).join("");
+      var capoLabel = f.capoInt === 0 ? "No Capo" : "Capo " + f.capoInt;
+      var diagrams = f.chords.map(function (c) {
+        return '<div class="fnd-dia"><div class="fnd-dia-name">' + esc(c) + '</div>' + chordSVG(c) + '</div>';
+      }).join("");
+      return '<div class="fnd-premium">' +
+          '<div class="fnd-segment">' + seg + '</div>' +
+          '<span class="fnd-pill is-selected fnd-capo-pill">' + esc(capoLabel) + '</span>' +
+          '<div class="fnd-diagrams">' + diagrams + '</div>' +
+        '</div>';
+    }
+
+    function identity(step, f) { return f.manual ? "manual" : "premium-" + step; }
+
+    function init(root) {
+      var capIcon = root.querySelector(".fnd-cap-icon");
+      var capText = root.querySelector(".fnd-cap-text");
+      var caption = root.querySelector(".fnd-caption");
+      var badge   = root.querySelector(".fnd-badge");
+      var layers  = root.querySelectorAll(".fnd-layer");
+      var layerA  = layers[0], layerB = layers[1];
+
+      var step = -1, elapsed = 0, activeLayer = layerA, currentIdentity = null;
+
+      function render(f) {
+        capIcon.innerHTML = f.manual ? ICON_PENCIL : ICON_SPARKLES;
+        capText.textContent = f.manual ? "Jolene, entered by hand" : "Jolene, picked for your level";
+        caption.classList.toggle("is-pro", !f.manual);
+        badge.textContent = f.manual ? "FREE" : "PRO";
+        badge.classList.toggle("is-pro", !f.manual);
+
+        var html = f.manual ? manualHTML(f) : premiumHTML(f);
+        var id = identity(step, f);
+        if (id === currentIdentity) {
+          activeLayer.innerHTML = html;
+        } else {
+          var incoming = activeLayer === layerA ? layerB : layerA;
+          incoming.innerHTML = html;
+          void incoming.offsetWidth;
+          incoming.classList.add("is-active");
+          activeLayer.classList.remove("is-active");
+          activeLayer = incoming;
+          currentIdentity = id;
+        }
+      }
+      function advance() { step = (step + 1) % FRAMES.length; render(FRAMES[step]); }
+
+      advance();
+      setInterval(function () {
+        elapsed += 0.1;
+        if (elapsed + 0.001 >= FRAMES[step].hold) { elapsed = 0; advance(); }
+      }, 100);
+
+      var caretOn = false;
+      setInterval(function () {
+        var caret = activeLayer.querySelector(".fnd-caret--live");
+        caretOn = caret ? !caretOn : false;
+        var all = root.querySelectorAll(".fnd-caret");
+        for (var i = 0; i < all.length; i++) all[i].classList.remove("on");
+        if (caret && caretOn) caret.classList.add("on");
+      }, 500);
+    }
+
+    var nodes = document.querySelectorAll(".fretnot-demo");
+    for (var i = 0; i < nodes.length; i++) init(nodes[i]);
+  })();
+  </script>
+</body>
+</html>
