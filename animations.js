@@ -83,6 +83,77 @@ document.addEventListener('DOMContentLoaded', function() {
   var CAPO_OPTIONS = ["None", "1", "2", "3"];
   var DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
 
+  // Chord shapes, low->high string [E A D G B e]; -1 = muted, 0 = open, n = fret.
+  var SHAPES = {
+    "Am":  [-1,0,2,2,1,0],
+    "C":   [-1,3,2,0,1,0],
+    "G":   [3,2,0,0,0,3],
+    "Bm":  [-1,2,4,4,3,2],
+    "D":   [-1,-1,0,2,3,2],
+    "A":   [-1,0,2,2,2,0],
+    "C#m": [-1,4,6,6,5,4],
+    "E":   [0,2,2,1,0,0],
+    "B":   [-1,2,4,4,4,2]
+  };
+
+  // Render one chord diagram as an SVG fretboard (matches reel.html).
+  function chordSVG(name) {
+    var frets = SHAPES[name];
+    var fretted = frets.filter(function (f) { return f > 0; });
+    var maxF = fretted.length ? Math.max.apply(null, fretted) : 0;
+    var minF = fretted.length ? Math.min.apply(null, fretted) : 0;
+    var rows = 5, start, nut;
+    if (maxF <= 5) { start = 1; nut = true; } else { start = minF; nut = false; }
+
+    var padL = nut ? 13 : 22, padR = 11, padTop = 18, padBot = 8;
+    var sGap = 11, fGap = 14;
+    var W = padL + sGap * 5 + padR, H = padTop + fGap * rows + padBot;
+    var xs = [], i;
+    for (i = 0; i < 6; i++) xs.push(padL + i * sGap);
+    var top = padTop, left = xs[0], right = xs[5];
+
+    var s = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" fill="none">';
+
+    // fret lines (top line is the nut for open shapes)
+    for (i = 0; i <= rows; i++) {
+      var y = top + i * fGap;
+      var isNut = (nut && i === 0);
+      s += '<line x1="' + left + '" y1="' + y + '" x2="' + right + '" y2="' + y +
+           '" stroke="' + (isNut ? '#1C1917' : '#B7ADA2') + '" stroke-width="' + (isNut ? 2.6 : 1) + '"/>';
+    }
+    // strings
+    for (i = 0; i < 6; i++) {
+      s += '<line x1="' + xs[i] + '" y1="' + top + '" x2="' + xs[i] + '" y2="' + (top + fGap * rows) +
+           '" stroke="#B7ADA2" stroke-width="1"/>';
+    }
+    // position label ("5fr") for barre shapes up the neck
+    if (!nut) {
+      s += '<text x="' + (left - 8) + '" y="' + (top + fGap * 0.85) + '" text-anchor="end" ' +
+           'font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" ' +
+           'fill="#8C857D">' + start + 'fr</text>';
+    }
+    // open / muted markers above the nut + fretted dots
+    for (i = 0; i < 6; i++) {
+      var f = frets[i], mx = xs[i], my = top - 7;
+      if (f === 0) {
+        s += '<circle cx="' + mx + '" cy="' + my + '" r="2.6" stroke="#8C857D" stroke-width="1.1" fill="none"/>';
+      } else if (f < 0) {
+        s += '<path d="M' + (mx - 2.6) + ' ' + (my - 2.6) + ' L' + (mx + 2.6) + ' ' + (my + 2.6) +
+             ' M' + (mx + 2.6) + ' ' + (my - 2.6) + ' L' + (mx - 2.6) + ' ' + (my + 2.6) +
+             '" stroke="#8C857D" stroke-width="1.1" stroke-linecap="round"/>';
+      }
+      if (f > 0) {
+        var row = f - start + 1;
+        if (row >= 1 && row <= rows) {
+          var cy = top + (row - 0.5) * fGap;
+          s += '<circle cx="' + mx + '" cy="' + cy + '" r="4" fill="#1C1917"/>';
+        }
+      }
+    }
+    s += '</svg>';
+    return s;
+  }
+
   var ICON_PENCIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
   var ICON_SPARKLES = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 4.6L18 8.2l-4.4 1.6L12 14l-1.6-4.2L6 8.2l4.4-1.6L12 2z"/><path d="M19 13l.9 2.5L22 16.5l-2.1.9L19 20l-.9-2.6L16 16.5l2.1-1L19 13z"/></svg>';
 
@@ -103,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="fnd-capo-row">' +
           '<span class="fnd-capo-label">Capo</span>' + pills +
         '</div>' +
-        '<div class="fnd-hint">Guessing the shapes and capo yourself.</div>' +
+        '<div class="fnd-hint">Working out the chord shapes and capo yourself.</div>' +
       '</div>';
   }
 
@@ -113,12 +184,14 @@ document.addEventListener('DOMContentLoaded', function() {
       return '<span class="fnd-seg-opt' + sel + '">' + esc(d) + '</span>';
     }).join("");
     var capoLabel = f.capoInt === 0 ? "No Capo" : "Capo " + f.capoInt;
-    var chords = f.chords.map(function (c) { return '<span class="fnd-chord">' + esc(c) + '</span>'; }).join("");
+    var diagrams = f.chords.map(function (c) {
+      return '<div class="fnd-dia"><div class="fnd-dia-name">' + esc(c) + '</div>' + chordSVG(c) + '</div>';
+    }).join("");
     return '' +
       '<div class="fnd-premium">' +
         '<div class="fnd-segment">' + seg + '</div>' +
         '<span class="fnd-pill is-selected fnd-capo-pill">' + esc(capoLabel) + '</span>' +
-        '<div class="fnd-chords">' + chords + '</div>' +
+        '<div class="fnd-diagrams">' + diagrams + '</div>' +
       '</div>';
   }
 

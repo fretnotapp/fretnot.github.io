@@ -1271,8 +1271,10 @@ a {
    Both layers share one grid cell (grid-area 1/1) so they stack on top of each
    other for the opacity crossfade, while the cell — and therefore the card —
    still grows to the tallest layer's content. (The old position:absolute stage
-   had a fixed 150px height, so the taller Pro frame overflowed the card.) */
-.fretnot-demo .fnd-stage { display: grid; min-height: 150px; }
+   had a fixed 150px height, so the taller Pro frame overflowed the card.)
+   min-height fits the tallest frame (the Pro chord diagrams) so the card
+   doesn't grow/jump when the diagrams first appear. */
+.fretnot-demo .fnd-stage { display: grid; min-height: 212px; }
 .fretnot-demo .fnd-layer {
     grid-area: 1 / 1;
     opacity: 0;
@@ -1345,20 +1347,14 @@ a {
     box-shadow: 0 1px 2px var(--fnd-seg-shadow);
 }
 
-/* chord tags (tintedPillStyle) */
-.fretnot-demo .fnd-chords { display: flex; gap: var(--fnd-sm); flex-wrap: wrap; }
-.fretnot-demo .fnd-chord {
-    font-size: 15px; font-weight: 600;
-    padding: var(--fnd-sm) var(--fnd-md);
-    border-radius: var(--fnd-r-pill);
-    color: var(--fnd-accent);
-    background: color-mix(in srgb, var(--fnd-accent) 15%, transparent);
-    border: 1px solid color-mix(in srgb, var(--fnd-accent) 30%, transparent);
+/* chord diagrams — actual fretboard charts, rendered as SVG by chordSVG() */
+.fretnot-demo .fnd-diagrams {
+    display: flex; gap: var(--fnd-sm);
+    width: 100%; justify-content: space-between;
 }
-/* Fallback tint for browsers without color-mix() */
-@supports not (background: color-mix(in srgb, red 15%, transparent)) {
-    .fretnot-demo .fnd-chord { background: rgba(243,140,3,0.15); border-color: rgba(243,140,3,0.30); }
-}
+.fretnot-demo .fnd-dia { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.fretnot-demo .fnd-dia-name { font-size: 14px; font-weight: 700; color: var(--fnd-primary); }
+.fretnot-demo .fnd-dia svg { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
     .fretnot-demo .fnd-layer { transition: none; }
