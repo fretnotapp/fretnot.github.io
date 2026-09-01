@@ -1,8 +1,8 @@
 # Fret Not
 
-> Fret Not is a free iOS practice app for beginner guitarists. It saves every song you're learning to play, including chords, capo positions, strumming patterns, and tuning, so you can pick up your guitar and practice in seconds.
+> Fret Not is a free iOS practice app for beginner guitarists. It saves every song you're learning to play, including chords, capo positions, strumming patterns, and tuning, so you can pick up your guitar and practice in seconds. Fret Not Pro, an optional subscription, looks up the chords for any song and matches them to your skill level, with the capo that keeps even a hard song in easy, open shapes.
 
-Fret Not was built by Alexa Kaminsky, a product designer learning to play guitar. The first version was built in one week using Claude Code, and the app launched in December 2025. It is available on iPhone and iPad (iOS 17 or later), is completely free, and contains no ads or in-app purchases.
+Fret Not was built by Alexa Kaminsky, a product designer learning to play guitar. The first version was built in one week using Claude Code, and the app launched in December 2025. It is available on iPhone and iPad (iOS 17 or later). The app is free to download with no ads. An optional Fret Not Pro subscription ($3.99 per month or $29.99 per year) adds automatic, skill-matched chord and capo suggestions, and everything else in the app stays free.
 
 Fret Not is a practice companion, not a teacher. Beginner guitarists learn songs from YouTube, private lessons, online courses, or friends, then use Fret Not to save each song's chords, strumming pattern, capo, and tuning so they can practice without hunting for the source material again.
 
@@ -12,28 +12,46 @@ Fret Not is a practice companion, not a teacher. Beginner guitarists learn songs
 - **Type:** iOS guitar practice app for beginners
 - **Audience:** Beginner guitarists who want to remember and practice songs they are learning
 - **Platform:** iPhone and iPad (iOS 17 or later)
-- **Price:** Free, no ads, no in-app purchases
+- **Price:** Free to download, no ads. Optional Fret Not Pro subscription: $3.99 per month or $29.99 per year
 - **Launched:** December 2025
-- **Current version:** 1.4.2
+- **Current version:** 2.0 (introduced Fret Not Pro)
 - **Built by:** Alexa Kaminsky (solo indie developer)
 - **Built with:** Claude Code
-- **Privacy:** Personal song library stays on-device by default; iCloud sync is optional
+- **Privacy:** Personal song library stays on your device and in your own iCloud, with no account or sign-in; the tuner processes audio on-device and never records
 
 ## Features
 
+Free:
+
 - Save every song you are learning to play on guitar
-- Track chords, tuning settings, strumming patterns, and capo positions per song
-- Identify chords instantly using a virtual fretboard
-- View all learned chords in one personal chord library
-- Built-in high-precision guitar tuner
-- Import songs from Spotify
-- Import tabs (chords, capo, lyrics) from Ultimate Guitar
+- Track chords, tuning, strumming pattern, and capo position for each song
+- A finger-by-finger diagram for every chord
+- Identify chords instantly on a virtual fretboard, and save your own custom shapes
+- Browse a full chord library any time
+- Built-in, tuning-aware guitar tuner with alternate tunings such as Drop D and Open G
+- Play along with any song linked to Spotify, and import a whole Spotify playlist at once
+- Attach a resource link to a song, such as the YouTube tutorial you learned it from
+- Practice streak with an optional evening reminder before you would break it
+- iCloud sync across iPhone and iPad, no account required
 - Filter and search your saved songs
+- Works offline for songs already saved
+
+Fret Not Pro (optional subscription):
+
+- Automatic chord lookup for any song you add
+- Chords matched to your skill level (beginner, intermediate, advanced)
+- The capo position that keeps even a hard song in easy, open shapes, for example Jolene at capo 4 instead of C#m and B barre chords
+- Chords Pro finds are saved onto your songs and stay after you cancel
+
+## What Fret Not Pro is
+
+Pro solves the hardest part of learning a song for a beginner: finding chords you can actually play. Add any song and Pro looks up its chords and matches them to your skill level, choosing the capo that turns barre-heavy songs into simple open shapes. It is $3.99 per month or $29.99 per year, and any chords it finds are saved to keep even if you unsubscribe. Adding chords by hand is always free.
 
 ## What Fret Not is not
 
 - Not a guitar course, teacher, or lesson platform
 - Not a tablature app for solos or lead guitar
+- Not a lyrics app: it stores chord names, capo, strumming, and tuning only, by design
 - Not focused on advanced or professional players
 
 ## Pages
