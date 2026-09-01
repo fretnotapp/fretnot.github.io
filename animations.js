@@ -132,6 +132,21 @@ document.addEventListener('DOMContentLoaded', function() {
            'font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" ' +
            'fill="#8C857D">' + start + 'fr</text>';
     }
+    // Detect a barre: the lowest played string sits at the lowest fret, shared by 2+ strings.
+    var firstPlayed = 0;
+    while (firstPlayed < 6 && frets[firstPlayed] < 0) firstPlayed++;
+    var countMinF = 0, lastMinF = -1, k;
+    for (k = 0; k < 6; k++) { if (minF > 0 && frets[k] === minF) { countMinF++; lastMinF = k; } }
+    var isBarre = minF > 0 && firstPlayed < 6 && frets[firstPlayed] === minF && countMinF >= 2;
+    // barre bar: one thick rounded line across the barred strings at the barre fret
+    if (isBarre) {
+      var brow = minF - start + 1;
+      if (brow >= 1 && brow <= rows) {
+        var by = top + (brow - 0.5) * fGap;
+        s += '<line x1="' + xs[firstPlayed] + '" y1="' + by + '" x2="' + xs[lastMinF] + '" y2="' + by +
+             '" stroke="#1C1917" stroke-width="8" stroke-linecap="round"/>';
+      }
+    }
     // open / muted markers above the nut + fretted dots
     for (i = 0; i < 6; i++) {
       var f = frets[i], mx = xs[i], my = top - 7;
@@ -142,7 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
              ' M' + (mx + 2.6) + ' ' + (my - 2.6) + ' L' + (mx - 2.6) + ' ' + (my + 2.6) +
              '" stroke="#8C857D" stroke-width="1.1" stroke-linecap="round"/>';
       }
-      if (f > 0) {
+      // dot for notes fingered above the barre; barred strings are covered by the bar
+      if (f > 0 && !(isBarre && f === minF)) {
         var row = f - start + 1;
         if (row >= 1 && row <= rows) {
           var cy = top + (row - 0.5) * fGap;
